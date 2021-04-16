@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const compression = require("compression");
 const router = require("./backend/routes/routes");
+const PORT = process.env.PORT || 5500;
 
 const app = express();
 
@@ -13,6 +14,6 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/client"));
 app.use("/", router);
 
-app.listen(5500, _=>{
-    console.log("Server listening on port 5500");
+app.listen(PORT, _=>{
+    console.log(`Server listening on port ${PORT}`);
 });
