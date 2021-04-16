@@ -1,0 +1,116 @@
+<html lang="en">
+<head>
+    <%- include("common-links") %>
+    <link rel="stylesheet" href="../assets/css/falcon-heavy.css">
+    <title>Falcon Heavy</title>
+</head>
+<body>
+  <%- include("header") %> 
+  <main>
+    <section class="section-1">
+      <div class="content">
+        <h1>Falcon Heavy</h1>
+        <h6>THE WORLD’S MOST POWERFUL ROCKET</h6>
+        <p>Falcon Heavy is the most powerful operational rocket in the world by a factor of two. With the ability to lift into orbit nearly 64 metric tons (141,000 lb) Falcon Heavy can lift more than twice the payload of the next closest operational vehicle, the Delta IV Heavy. Falcon Heavy is composed of three Falcon 9 nine-engine cores whose 27 Merlin engines together generate more than 5 million pounds of thrust at liftoff, equal to approximately eighteen 747 aircraft.</p>
+      </div>
+      <img src="/assets/images/falcon-heavy/falcon-heavy.jpg" alt="Falcon heavy image">
+    </section>
+    <section class="section-2">
+      <h2>Launch Stats</h2>
+      <div class="stats">
+        <div class="stat">
+          <p class="number">3</p>
+          <p class="stat-name">Total Launches</p>
+        </div>
+        <div class="stat">
+          <p class="number">3</p>
+          <p class="stat-name">Total Landings</p>
+        </div>
+        <div class="stat">
+          <p class="number">4</p>
+          <p class="stat-name">Reflown Rockets</p>
+        </div>
+      </div>
+    </section>
+    <section class="section-3">
+      <img src="/assets/images/falcon-heavy/falcon-heavy-body.png" alt="Falcon Heavy body">
+      <div class="stats">
+        <h2>Overview</h2>
+        <div class="stat">
+          <h6>HEIGHT</h6>
+          <p><span>70 m</span> / 229.6 ft</p>
+        </div>
+        <div class="stat">
+          <h6>DIAMETER</h6>
+          <p><span>12.2 m</span> / 39.9 ft</p>
+        </div>
+        <div class="stat">
+          <h6>MASS</h6>
+          <p><span>1,420,788 kg</span> / 3,125,735 lb</p>
+        </div>
+        <div class="stat">
+          <h6>PAYLOAD TO LEO</h6>
+          <p><span>63,800 kg</span> / 140,660 lb</p>
+        </div>
+        <div class="stat">
+          <h6>PAYLOAD TO GTO</h6>
+          <p><span>26,700 kg</span> / 58,860 lb</p>
+        </div>
+        <div class="stat">
+          <h6>PAYLOAD TO MARS</h6>
+          <p><span>16,800 kg</span> / 37,040 lb</p>
+        </div>
+      </div>
+    </section>
+    <section class="section-4">
+      <h2>Merlin Engine</h2>
+      <div class="types">
+        <div class="content">
+          <h5>Sea Level</h5>
+          <p>Merlin is a family of rocket engines developed by SpaceX for use on its Falcon 1, Falcon 9 and Falcon Heavy
+            launch vehicles. Merlin engines use RP-1 and liquid oxygen as rocket propellants in a gas-generator power
+            cycle. The Merlin engine was originally designed for recovery and reuse.</p>
+            <div class="stats">
+              <div class="stat">
+                <h6>Propellant</h6>
+                <p><span>LOX</span> / RP-1</p>
+              </div>
+              <div class="stat">
+                <h6>Thrust</h6>
+                <p><span>845kN</span> / 190,000 lbf</p>
+              </div>
+            </div>
+          </div>
+          <img src="assets/images/merlin.png" alt="merlin">
+      </div>
+      <div class="types">
+        <div class="content">
+          <h5>VACUUM</h5>
+          <p>Merlin Vacuum features a larger exhaust section and a significantly larger expansion nozzle to maximize the
+            engine’s efficiency in the vacuum of space. Its combustion chamber is regeneratively cooled, while the
+            expansion nozzle is radiatively cooled. At full power, the Merlin Vacuum engine operates with the greatest
+            efficiency ever for an American-made hydrocarbon rocket engine.</p>
+            <div class="stats">
+              <div class="stat">
+                <h6>Propellant</h6>
+                <p><span>LOX</span> / RP-1</p>
+              </div>
+              <div class="stat">
+                <h6>Thrust</h6>
+                <p><span>981kN</span> / 220,500 lbf</p>
+              </div>
+            </div>
+          </div>
+          <img src="assets/images/merlin-vaccum.png" alt="merlin vaccum">
+      </div>
+    </section>
+    <section class="section-5">
+      <h2>Falcon Heavy Gallery</h2>
+      <% for(let i = 1; i<=10;i++){ %>
+      <img src="assets/images/falcon-heavy/FH_<%= i %>.webp" alt="falcon heavy image">
+      <% } %>
+    </section>
+  </main>
+  <%- include("footer") %>
+</body>
+</html>

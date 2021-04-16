@@ -1,0 +1,122 @@
+<html lang="en">
+
+<head>
+  <%- include("common-links") %>
+  <link rel="stylesheet" href="../assets/css/falcon-9.css">
+  <title>Falcon 9</title>
+</head>
+
+<body>
+  <%- include("header") %>
+  <main>
+    <section class="section-1">
+      <div class="content">
+        <h1>Falcon 9</h1>
+        <h6>First orbital class rocket capable of reflight</h6>
+        <p>Falcon 9 is a reusable, two-stage rocket designed and manufactured by SpaceX for the reliable and safe
+          transport of people and payloads into Earth orbit and beyond. Falcon 9 is the world’s first orbital class
+          reusable rocket. Reusability allows SpaceX to refly the most expensive parts of the rocket, which in turn
+          drives down the cost of space access.</p>
+      </div>
+      <img src="/assets/images/falcon-9/falcon-9.jpg" alt="Falcon 9">
+    </section>
+    <section class="section-2">
+      <h2>Launch Stats</h2>
+      <div class="stats">
+        <div class="stat">
+          <p class="number">112</p>
+          <p class="stat-name">Total Launches</p>
+        </div>
+        <div class="stat">
+          <p class="number">72</p>
+          <p class="stat-name">Total Landings</p>
+        </div>
+        <div class="stat">
+          <p class="number">55</p>
+          <p class="stat-name">Reflown Rockets</p>
+        </div>
+      </div>
+    </section>
+    <section class="section-3">
+      <img src="/assets/images/falcon-9/falcon-9-overview.jpg" alt="Falcon 9">
+      <div class="stats">
+        <h2>Overview</h2>
+        <div class="stat">
+          <h6>HEIGHT</h6>
+          <p><span>70 m</span> / 229.6 ft</p>
+        </div>
+        <div class="stat">
+          <h6>DIAMETER</h6>
+          <p><span>3.7 m</span> / 12 ft</p>
+        </div>
+        <div class="stat">
+          <h6>MASS</h6>
+          <p><span>549,054 kg</span> / 1,207,920 lb</p>
+        </div>
+        <div class="stat">
+          <h6>PAYLOAD TO LEO</h6>
+          <p><span>22,800 kg</span> / 50,265 lb</p>
+        </div>
+        <div class="stat">
+          <h6>PAYLOAD TO GTO</h6>
+          <p><span>8,300 kg</span> / 18,300 lb</p>
+        </div>
+        <div class="stat">
+          <h6>PAYLOAD TO MARS</h6>
+          <p><span>4,020 kg</span> / 8,860 lb</p>
+        </div>
+      </div>
+    </section>
+    <section class="section-4">
+      <h2>Merlin Engine</h2>
+      <div class="types">
+        <div class="content">
+          <h5>Sea Level</h5>
+          <p>Merlin is a family of rocket engines developed by SpaceX for use on its Falcon 1, Falcon 9 and Falcon Heavy
+            launch vehicles. Merlin engines use RP-1 and liquid oxygen as rocket propellants in a gas-generator power
+            cycle. The Merlin engine was originally designed for recovery and reuse.</p>
+            <div class="stats">
+              <div class="stat">
+                <h6>Propellant</h6>
+                <p><span>LOX</span> / RP-1</p>
+              </div>
+              <div class="stat">
+                <h6>Thrust</h6>
+                <p><span>845kN</span> / 190,000 lbf</p>
+              </div>
+            </div>
+          </div>
+          <img src="assets/images/merlin.png" alt="merlin">
+      </div>
+      <div class="types">
+        <div class="content">
+          <h5>VACUUM</h5>
+          <p>Merlin Vacuum features a larger exhaust section and a significantly larger expansion nozzle to maximize the
+            engine’s efficiency in the vacuum of space. Its combustion chamber is regeneratively cooled, while the
+            expansion nozzle is radiatively cooled. At full power, the Merlin Vacuum engine operates with the greatest
+            efficiency ever for an American-made hydrocarbon rocket engine.</p>
+            <div class="stats">
+              <div class="stat">
+                <h6>Propellant</h6>
+                <p><span>LOX</span> / RP-1</p>
+              </div>
+              <div class="stat">
+                <h6>Thrust</h6>
+                <p><span>981kN</span> / 220,500 lbf</p>
+              </div>
+            </div>
+          </div>
+          <img src="assets/images/merlin-vaccum.png" alt="merlin vaccum">
+      </div>
+    </section>
+    <section class="section-5">
+      <h2>Falcon 9 Gallery</h2>
+      <% for(let i = 1; i<=10;i++){ %>
+      <img src="assets/images/falcon-9/F9_<%= i %>.webp" alt="falcon-9 image">
+      <% } %>
+    </section>
+  </main>
+  <%- include("footer") %>
+</body>
+
+</html>

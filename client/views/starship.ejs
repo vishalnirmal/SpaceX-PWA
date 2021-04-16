@@ -1,0 +1,114 @@
+<html lang="en">
+
+<head>
+  <%- include("common-links") %>
+  <link rel="stylesheet" href="../assets/css/starship.css">
+  <title>Starship</title>
+</head>
+
+<body>
+  <%- include("header") %>
+  <main>
+    <section class="section-1">
+      <div class="content">
+        <h1>Starship</h1>
+        <!-- <h6>SENDING HUMANS AND CARGO INTO SPACE</h6> -->
+        <p>On Tuesday, March 30, SpaceX launched its fourth high-altitude flight test of Starship from Starbase in
+          Texas. Similar to previous high-altitude flight tests, Starship Serial Number 11 (SN11) was powered through
+          ascent by three Raptor engines, each shutting down in sequence prior to the vehicle reaching apogee –
+          approximately 10 km in altitude. SN11 performed a propellant transition to the internal header tanks, which
+          hold landing propellant, before reorienting itself for reentry and a controlled aerodynamic descent.
+
+          Shortly after the landing burn started, SN11 experienced a rapid unscheduled disassembly. Teams will continue
+          to review data and work toward our next flight test.
+
+          Test flights are all about improving our understanding and development of a fully reusable transportation
+          system designed to carry both crew and cargo on long-duration interplanetary flights, and help humanity return
+          to the Moon, and travel to Mars and beyond.</p>
+      </div>
+      <img src="/assets/images/starship/starship.jpg" alt="Starship Photo">
+    </section>
+    <section class="section-3">
+      <img src="/assets/images/starship/starship-body.png" alt="Starship body">
+      <div class="stats">
+        <h2>Overview</h2>
+        <div class="stat">
+          <h6>HEIGHT</h6>
+          <p><span>120 m</span> / 394 ft</p>
+        </div>
+        <div class="stat">
+          <h6>HEIGHT (Starship)</h6>
+          <p><span>50 m</span> / 160 ft</p>
+        </div>
+        <div class="stat">
+          <h6>HEIGHT (Super Heavy)</h6>
+          <p><span>70 m</span> / 230 ft</p>
+        </div>
+        <div class="stat">
+          <h6>DIAMETER</h6>
+          <p><span>9 m</span> / 30 ft</p>
+        </div>
+        <div class="stat">
+          <h6>DIAMETER (Starship)</h6>
+          <p><span>9 m</span> / 30 ft</p>
+        </div>
+        <div class="stat">
+          <h6>DIAMETER (Super Heavy)</h6>
+          <p><span>9 m</span> / 30 ft</p>
+        </div>
+        <div class="stat">
+          <h6>PAYLOAD TO LEO</h6>
+          <p><span>100+ t</span> / 220 klb</p>
+        </div>
+        <div class="stat">
+          <h6>Propellant capacity (Starship)</h6>
+          <p><span>1200 t</span> / 2.6 Mlb</p>
+        </div>
+        <div class="stat">
+          <h6>Propellant capacity (Super Heavy)</h6>
+          <p><span>3400 t</span> / 6.8 Mlb</p>
+        </div>
+        <div class="stat">
+          <h6>Thrust</h6>
+          <p><span>72 MN</span> / 16 Mlbf</p>
+        </div>
+      </div>
+    </section>
+    <section class="section-4">
+      <h2>Engines</h2>
+      <div class="types">
+        <div class="content">
+          <h5>RAPTOR</h5>
+          <p>The Raptor engine is a reusable methalox staged-combustion engine that powers the Starship launch system.
+            Raptor engines began flight testing on the Starship prototype rockets in July 2019, becoming the first
+            full-flow staged combustion rocket engine ever flown.</p>
+          <div class="stats">
+            <div class="stat">
+              <h6>Diameter</h6>
+              <p><span>1.3 m</span> / 4 ft</p>
+            </div>
+            <div class="stat">
+              <h6>Height</h6>
+              <p><span>3.1 m</span> / 10.2 ft</p>
+            </div>
+            <div class="stat">
+              <h6>Thrust</h6>
+              <p><span>2 MN</span> / 440 klbf</p>
+            </div>
+          </div>
+        </div>
+        <img src="assets/images/starship/raptor.png" alt="raptor engine">
+      </div>
+    </section>
+    <section class="section-5">
+      <h2>Starship Gallery</h2>
+      <% for(let i = 1; i<=10;i++){ %>
+      <img src="assets/images/starship/STR_<%= i %>.webp" alt="starship image">
+      <% } %>
+    </section>
+  </main>
+  <%- include("footer") %>
+  <script src="../assets/js/index.js"></script>
+</body>
+
+</html>

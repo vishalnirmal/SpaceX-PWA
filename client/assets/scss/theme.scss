@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+$fontfamily: 'Play', sans-serif;
+header, footer{
+    padding: 1rem 2rem;
+}
+$fonth1: 2.5rem;
+$fonth2: 2rem;
+$fonth3: 1.75rem;
+$fonth4: 1.5rem;
+$fonth5: 1.25rem;
+$fonth6: 1.15rem;
+$fontp: 1rem;
+@mixin capital($fontsize, $fontfamily) {
+    font-size: $fontsize;
+    font-family: $fontfamily;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+h1{
+    @include capital($fonth1, $fontfamily);
+}
+h2{
+    @include capital($fonth2, $fontfamily);
+}
+h3{
+    @include capital($fonth3, $fontfamily);
+}
+h4{
+    @include capital($fonth4, $fontfamily);
+}
+h5{
+    @include capital($fonth5, $fontfamily);
+}
+h6{
+    @include capital($fonth6, $fontfamily);
+}
+p{
+    font-size: $fontp;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    text-align: left;
+}
+section{
+    margin: 3rem 0;
+}
+img{
+    object-fit: cover;
+}
+@media (max-width: 1024px){
+    $fonth1: $fonth1 * 0.9;
+    $fonth2: $fonth2 * 0.9;
+    $fonth3: $fonth3 * 0.9;
+    $fonth4: $fonth4 * 0.9;
+    $fonth5: $fonth5 * 0.9;
+    $fonth6: $fonth6 * 0.9;
+    $fontp: $fontp * 0.9;
+    h1{
+        @include capital($fonth1, $fontfamily);
+    }
+    h2{
+        @include capital($fonth2, $fontfamily);
+    }
+    h3{
+        @include capital($fonth3, $fontfamily);
+    }
+    h4{
+        @include capital($fonth4, $fontfamily);
+    }
+    h5{
+        @include capital($fonth5, $fontfamily);
+    }
+    h6{
+        @include capital($fonth6, $fontfamily);
+    }
+    p{
+        font-size: $fontp;
+    }
+}
+@media (max-width: 768px){
+    $fonth1: $fonth1 * 0.8;
+    $fonth2: $fonth2 * 0.8;
+    $fonth3: $fonth3 * 0.8;
+    $fonth4: $fonth4 * 0.8;
+    $fonth5: $fonth5 * 0.8;
+    $fonth6: $fonth6 * 0.8;
+    $fontp: $fontp * 0.8;
+    h1{
+        @include capital($fonth1, $fontfamily);
+    }
+    h2{
+        @include capital($fonth2, $fontfamily);
+    }
+    h3{
+        @include capital($fonth3, $fontfamily);
+    }
+    h4{
+        @include capital($fonth4, $fontfamily);
+    }
+    h5{
+        @include capital($fonth5, $fontfamily);
+    }
+    h6{
+        @include capital($fonth6, $fontfamily);
+    }
+    p{
+        font-size: $fontp;
+    }
+}
+@media (max-width: 425px){
+    $fonth1: $fonth1 * 0.75;
+    $fonth2: $fonth2 * 0.75;
+    $fonth3: $fonth3 * 0.75;
+    $fonth4: $fonth4 * 0.75;
+    $fonth5: $fonth5 * 0.75;
+    $fonth6: $fonth6 * 0.75;
+    $fontp: $fontp * 0.75;
+    h1{
+        @include capital($fonth1, $fontfamily);
+    }
+    h2{
+        @include capital($fonth2, $fontfamily);
+    }
+    h3{
+        @include capital($fonth3, $fontfamily);
+    }
+    h4{
+        @include capital($fonth4, $fontfamily);
+    }
+    h5{
+        @include capital($fonth5, $fontfamily);
+    }
+    h6{
+        @include capital($fonth6, $fontfamily);
+    }
+    p{
+        font-size: $fontp;
+    }
+}

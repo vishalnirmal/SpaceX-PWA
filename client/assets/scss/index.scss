@@ -1,0 +1,192 @@
+$bgColor: black;
+$textColor: white;
+
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+$fontfamily: 'Play', sans-serif;
+
+body{
+    background-color: $bgColor;
+    color: $textColor;
+    font-family: $fontfamily;
+}
+main{
+    .section-1{
+        width: 100%;
+        height: 100%;
+        max-height: 530px;
+        background: url("../images/section-background-2.jpg") no-repeat;
+        background-size: cover;
+        .quote{
+            position: relative;
+            width: 100%;
+            top: 75px;
+            text-align: center;
+            .text{
+                width: 75%;
+                // font-size: 1.5rem;
+                text-align: center;
+                margin: 1rem auto;
+            }
+            .person{
+                margin: 1rem auto;
+            }
+        }
+    }
+    .section-2{
+        h2{
+            text-align: center;
+            margin: 3rem 0;
+        }
+        .stats{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 75%;
+            margin: auto;
+            text-align: center;
+            gap: 5rem;
+            .stat{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                .number{
+                    font-size: 6rem;
+                    text-align: center;
+                }
+                .stat-name{
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    text-align: center;
+                }
+                &:nth-child(2){
+                    position: relative;
+                    &::after{
+                        position: absolute;
+                        content: "";
+                        height: 80%;
+                        border-right: 1px solid white;
+                        right: -2.5rem;
+                        top: 10%;
+                    }
+                    &::before{
+                        position: absolute;
+                        content: "";
+                        height: 80%;
+                        border-right: 1px solid white;
+                        left: -2.5rem;
+                        top: 10%;
+                    }
+                }
+            }
+        }
+    }
+    .section-3{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: space-between;
+        align-items: center;
+        gap: 3rem 0;
+        img{
+            width: 100%;
+        }
+        .content{
+            width: calc(100% - 100px);
+            padding: 20px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+    }
+    .section-4{
+        h2{
+            margin: 4rem;
+            text-align: center;
+        }
+        .facilities{
+            margin: 1rem auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+            gap: 1rem;
+            justify-content: space-between;
+            .facility{
+                width: calc(100% - 2px);
+                height: calc(100% - 2px);
+                border: 1px solid white;
+            }
+            img{
+                width: 100%;
+            }
+            .content{
+                padding: 20px;
+                & > *{
+                    margin: 1rem 0;
+                }
+            }
+        }
+    }
+}
+.cta{
+    all: unset;
+    padding: 15px 30px;
+    border: 2px solid white;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.cta:hover{
+    background-color: white;
+    color: black;
+}
+
+
+@media (max-width: 768px){
+    main{
+        .section-2{
+            .stats{
+                flex-direction: column;
+                .stat:nth-child(2){
+                    &::before{
+                        width: 100%;
+                        top: -2.5rem;
+                        left: 0;
+                        border: none;   
+                        border-top: 1px solid white;
+                    }
+                    &::after{
+                        border: none;
+                        top: calc(100% - 2.5rem);
+                        right: 0;
+                        width: 100%;
+                        border-bottom: 1px solid white;
+                    }
+                }
+            }
+        }
+        .section-3{
+            grid-template-columns: 1fr;
+            .content{
+                justify-content: center;
+            }
+        }
+        .section-4{
+            .facilities{
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}
+
+@media(max-width: 550px){
+    main{
+        .section-1{
+            padding-top: 10rem;
+            .quote{
+                margin-top: -13rem;
+            }
+        }
+    }
+}
