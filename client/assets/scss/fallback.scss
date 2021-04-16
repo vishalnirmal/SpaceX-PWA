@@ -1,0 +1,11 @@
+$bgColor: black;
+$textColor: white;
+
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+$fontfamily: 'Play', sans-serif;
+
+body{
+    background-color: $bgColor;
+    color: $textColor;
+    font-family: $fontfamily;
+}

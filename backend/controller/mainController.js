@@ -16,6 +16,9 @@ let falconHeavy = (req, res)=>{
 let startship = (req, res)=>{
     res.render("starship");
 }
+let fallback = (req, res)=>{
+    res.render("fallback");
+}
 
 module.exports = {
 
@@ -24,5 +27,6 @@ module.exports = {
     falconHeavy,
     dragon,
     startship,
-    journey
+    journey,
+    fallback
 };

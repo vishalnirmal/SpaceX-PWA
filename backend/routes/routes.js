@@ -6,5 +6,6 @@ router.get("/falcon-heavy", mainController.falconHeavy);
 router.get("/dragon", mainController.dragon);
 router.get("/starship", mainController.startship);
 router.get("/journey", mainController.journey);
+router.get("/fallback", mainController.fallback);
 
 module.exports = router;

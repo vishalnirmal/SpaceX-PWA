@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAGA,OAAO,CAAC,8EAAI;AAGZ,AAAA,IAAI,CAAA;EACA,gBAAgB,EAPV,KAAK;EAQX,KAAK,EAPG,KAAK;EAQb,WAAW,EALF,MAAM,EAAE,UAAU;CAM9B",
+    "sources": [
+        "../scss/fallback.scss"
+    ],
+    "names": [],
+    "file": "fallback.css"
+}
