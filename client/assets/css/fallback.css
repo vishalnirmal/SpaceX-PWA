@@ -4,4 +4,10 @@ body {
   color: white;
   font-family: "Play", sans-serif;
 }
+
+h3 {
+  margin: 8rem auto;
+  text-align: center;
+  width: 60%;
+}
 /*# sourceMappingURL=fallback.css.map */
