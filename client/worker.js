@@ -1,5 +1,5 @@
-const staticCacheName = "static-v3";
-const dynamicCacheName = "dynamic-v3";
+const staticCacheName = "static-v4";
+const dynamicCacheName = "dynamic-v4";
 const assets = [
     "/",
     "/fallback",
