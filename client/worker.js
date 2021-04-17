@@ -1,5 +1,5 @@
-const staticCacheName = "static-v2";
-const dynamicCacheName = "dynamic-v2";
+const staticCacheName = "static-v3";
+const dynamicCacheName = "dynamic-v3";
 const assets = [
     "/",
     "/fallback",
@@ -20,7 +20,11 @@ const assets = [
     "/assets/images/facility-5.webp",
     "/assets/images/facility-6.webp",
     "/assets/images/section-background-2.jpg",
-    "https://kit.fontawesome.com/66d1c73752.js"
+    "https://kit.fontawesome.com/66d1c73752.js",
+    "https://ka-f.fontawesome.com/releases/v5.15.3/css/free.min.css?token=66d1c73752",
+    "https://ka-f.fontawesome.com/releases/v5.15.3/css/free-v4-shims.min.css?token=66d1c73752",
+    "https://ka-f.fontawesome.com/releases/v5.15.3/css/free-v4-font-face.min.css?token=66d1c73752",
+    "https://ka-f.fontawesome.com/releases/v5.15.3/webfonts/free-fa-solid-900.woff2"
 ];
 const routes = [
     "",
