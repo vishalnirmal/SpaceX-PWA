@@ -1,5 +1,5 @@
-const staticCacheName = "static-v9";
-const dynamicCacheName = "dynamic-v9";
+const staticCacheName = "static-v10";
+const dynamicCacheName = "dynamic-v10`c";
 const assets = [
     "/",
     "/fallback",
@@ -12,6 +12,7 @@ const assets = [
     "js/index.js",
     "js/register.js",
     "images/mars.jpg",
+    "images/favicon.ico",
     "images/droneship-landing.png",
     "images/facility-1.webp",
     "images/facility-2.webp",
