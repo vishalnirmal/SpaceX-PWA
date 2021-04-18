@@ -6,13 +6,28 @@ body {
 }
 
 main {
+  padding: 20px;
   text-align: center;
+  height: calc(100vh - 66px - 51px - 40px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 3rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 h3 {
-  margin: 8rem auto 3rem;
   text-align: center;
-  width: 60%;
+  max-width: 600px;
 }
 
 .cta {

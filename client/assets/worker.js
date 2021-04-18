@@ -1,25 +1,25 @@
-const staticCacheName = "static-v8";
-const dynamicCacheName = "dynamic-v8";
+const staticCacheName = "static-v9";
+const dynamicCacheName = "dynamic-v9";
 const assets = [
     "/",
     "/fallback",
-    "/assets/css/reset.css",
-    "/assets/css/theme.css",
-    "/assets/css/header.css",
-    "/assets/css/footer.css",
-    "/assets/css/index.css",
-    "/assets/css/fallback.css",
-    "/assets/js/index.js",
-    "/assets/js/register.js",
-    "/assets/images/mars.jpg",
-    "/assets/images/droneship-landing.png",
-    "/assets/images/facility-1.webp",
-    "/assets/images/facility-2.webp",
-    "/assets/images/facility-3.webp",
-    "/assets/images/facility-4.webp",
-    "/assets/images/facility-5.webp",
-    "/assets/images/facility-6.webp",
-    "/assets/images/section-background-2.jpg",
+    "css/reset.css",
+    "css/theme.css",
+    "css/header.css",
+    "css/footer.css",
+    "css/index.css",
+    "css/fallback.css",
+    "js/index.js",
+    "js/register.js",
+    "images/mars.jpg",
+    "images/droneship-landing.png",
+    "images/facility-1.webp",
+    "images/facility-2.webp",
+    "images/facility-3.webp",
+    "images/facility-4.webp",
+    "images/facility-5.webp",
+    "images/facility-6.webp",
+    "images/section-background-2.jpg",
     "https://kit.fontawesome.com/66d1c73752.js"
 ];
 const routes = [

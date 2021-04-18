@@ -2,13 +2,14 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
     .logo{
         fill: white;
-        width: 25%;
+        flex-basis: 250px;
     }
     .menu{
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-end;
         align-items: center;
         gap: 2rem;
     }
@@ -47,10 +48,6 @@ header.show-menu{
 }
 @media (max-width: 768px){
     header{
-        .logo{
-            width: 75%;
-            max-width: 200px;
-        }
         .menu{
             display: none;
         }

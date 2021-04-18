@@ -154,25 +154,28 @@ main{
 }
 @media (max-width: 1024px){
     main{
-    }
-}
-@media (max-width: 768px){
-    main{
-        .section-1{
+        .section-1 {
             grid-template-columns: 1fr;
             gap: 1rem;
-            img{
+
+            img {
                 grid-area: 1/1/span 1/span 1;
             }
-            .content{
+
+            .content {
                 text-align: center;
-                p{
+
+                p {
                     text-align: center;
                     width: 85%;
                     margin: auto;
                 }
             }
         }
+    }
+}
+@media (max-width: 768px){
+    main{
         .section-2{
             .stats{
                 flex-direction: column;

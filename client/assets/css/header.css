@@ -8,20 +8,22 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  gap: 2rem;
 }
 
 header .logo {
   fill: white;
-  width: 25%;
+  -ms-flex-preferred-size: 250px;
+      flex-basis: 250px;
 }
 
 header .menu {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -72,10 +74,6 @@ header.show-menu .mobile-menu {
 }
 
 @media (max-width: 768px) {
-  header .logo {
-    width: 75%;
-    max-width: 200px;
-  }
   header .menu {
     display: none;
   }

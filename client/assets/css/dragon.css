@@ -216,7 +216,7 @@ main .section-5 img {
   height: 100%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   main .section-1 {
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
@@ -237,6 +237,9 @@ main .section-5 img {
     width: 85%;
     margin: auto;
   }
+}
+
+@media (max-width: 768px) {
   main .section-2 .stats {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;

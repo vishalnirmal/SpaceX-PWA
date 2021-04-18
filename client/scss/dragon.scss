@@ -188,12 +188,8 @@ main {
     }
 }
 
-@media (max-width: 1024px) {
-    main {}
-}
-
-@media (max-width: 768px) {
-    main {
+@media (max-width: 1024px){
+    main{
         .section-1 {
             grid-template-columns: 1fr;
             gap: 1rem;
@@ -212,7 +208,11 @@ main {
                 }
             }
         }
+    }
+}
 
+@media (max-width: 768px) {
+    main {
         .section-2 {
             .stats {
                 flex-direction: column;

@@ -10,12 +10,18 @@ body{
     font-family: $fontfamily;
 }
 main{
+    padding: 20px;
     text-align: center;
+    height: calc(100vh - 66px - 51px - 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    justify-content: center;
+    align-items: center;
 }
 h3{
-    margin: 8rem auto 3rem;
     text-align: center;
-    width: 60%;
+    max-width: 600px;
 }
 .cta{
     all: unset;
