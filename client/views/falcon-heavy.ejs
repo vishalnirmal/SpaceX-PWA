@@ -111,7 +111,14 @@
       <img src="images/falcon-heavy/FH_<%= i %>.webp" alt="falcon heavy image">
       <% } %>
     </section>
+    <%- include("comments") %> 
   </main>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+  <script>
+      let collection_path = "comments-falcon-heavy";
+  </script>
   <%- include("footer") %>
+  <script src="js/db.js"></script>
 </body>
 </html>

@@ -116,8 +116,15 @@
       <img src="images/falcon-9/F9_<%= i %>.webp" alt="falcon-9 image">
       <% } %>
     </section>
-  </main>
-  <%- include("footer") %>
+    <%- include("comments") %> 
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script>
+        let collection_path = "comments-falcon-9";
+    </script>
+    <%- include("footer") %>
+    <script src="js/db.js"></script>
 </body>
 
 </html>

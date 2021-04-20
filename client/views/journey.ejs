@@ -86,8 +86,15 @@
         <img src="images/journey/landing-1.jpg" alt="Crew dragon lands with humans in it">
       </div>
     </section>
+    <%- include("comments") %> 
   </main>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+  <script>
+      let collection_path = "comments-journet";
+  </script>
   <%- include("footer") %>
+  <script src="js/db.js"></script>
 </body>
 
 </html>

@@ -107,8 +107,15 @@
       <img src="images/starship/STR_<%= i %>.webp" alt="starship image">
       <% } %>
     </section>
+    <%- include("comments") %>
   </main>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+  <script>
+    let collection_path = "comments-starship";
+  </script>
   <%- include("footer") %>
+  <script src="js/db.js"></script>
 </body>
 
 </html>

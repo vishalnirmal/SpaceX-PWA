@@ -1,5 +1,5 @@
-const staticCacheName = "static-v10";
-const dynamicCacheName = "dynamic-v10";
+const staticCacheName = "static-v26";
+const dynamicCacheName = "dynamic-v17";
 const assets = [
     "/",
     "/fallback",
@@ -9,6 +9,8 @@ const assets = [
     "css/footer.css",
     "css/index.css",
     "css/fallback.css",
+    "css/comments.css",
+    "js/db.js",
     "js/index.js",
     "js/register.js",
     "images/mars.jpg",
@@ -21,6 +23,7 @@ const assets = [
     "images/facility-5.webp",
     "images/facility-6.webp",
     "images/section-background-2.jpg",
+    "images/comments/profile-picture.png",
     "https://kit.fontawesome.com/66d1c73752.js"
 ];
 const routes = [
@@ -32,42 +35,44 @@ const routes = [
     "journey",
     "fallback"
 ];
-self.addEventListener("install", e=>{
-    console.log("Worker Installed");
+self.addEventListener("install", e => {
+    self.skipWaiting();
     e.waitUntil(
-        caches.open(staticCacheName).then(cache=>{
+        caches.open(staticCacheName).then(cache => {
             cache.addAll(assets);
         })
     );
 });
 
-self.addEventListener("activate", e=>{
+self.addEventListener("activate", e => {
     console.log("Worker Activated");
     e.waitUntil(
-        caches.keys().then(keys=>{
+        caches.keys().then(keys => {
             return Promise.all(
                 keys
-                .filter(key=> key !== staticCacheName && key !== dynamicCacheName)
-                .map(key=>caches.delete(key))
+                .filter(key => key !== staticCacheName && key !== dynamicCacheName)
+                .map(key => caches.delete(key))
             );
         })
     );
 });
 
-self.addEventListener("fetch", e=>{
-    e.respondWith(
-        caches.match(e.request).then(cacheRes =>{
-            return cacheRes || fetch(e.request).then(fetchRes => {
-                return caches.open(dynamicCacheName).then(cache=>{
-                    cache.put(e.request.url, fetchRes.clone());
-                    return fetchRes;
+self.addEventListener("fetch", e => {
+    if (e.request.url.indexOf("firestore.googleapis.com") === -1) {
+        e.respondWith(
+            caches.match(e.request).then(cacheRes => {
+                return cacheRes || fetch(e.request).then(fetchRes => {
+                    return caches.open(dynamicCacheName).then(cache => {
+                        cache.put(e.request.url, fetchRes.clone());
+                        return fetchRes;
+                    });
+                }).catch(_ => {
+                    let url = e.request.url;
+                    console.log(url.slice(url.lastIndexOf("/") + 1), routes.includes(url.slice(url.lastIndexOf("/") + 1)));
+                    if (routes.includes(url.slice(url.lastIndexOf("/") + 1)))
+                        return caches.match("/fallback");
                 });
-            }).catch(_=>{
-                let url = e.request.url;
-                console.log(url.slice(url.lastIndexOf("/")+1), routes.includes(url.slice(url.lastIndexOf("/")+1)));
-                if (routes.includes(url.slice(url.lastIndexOf("/")+1)))
-                    return caches.match("/fallback");
-            });
-        })
-    );
+            })
+        );
+    }
 });
