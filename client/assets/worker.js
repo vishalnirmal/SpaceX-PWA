@@ -1,5 +1,5 @@
-const staticCacheName = "static-v26";
-const dynamicCacheName = "dynamic-v17";
+const staticCacheName = "static-v33";
+const dynamicCacheName = "dynamic-v20";
 const assets = [
     "/",
     "/fallback",
@@ -37,6 +37,12 @@ const routes = [
 ];
 self.addEventListener("install", e => {
     self.skipWaiting();
+    if (Notification.permission === "granted"){
+        navigator.serviceWorker.getRegistration()
+        .then(reg=>{
+            reg.showNotification(`Welcome to SpaceX`);
+        });
+    }
     e.waitUntil(
         caches.open(staticCacheName).then(cache => {
             cache.addAll(assets);
@@ -58,21 +64,20 @@ self.addEventListener("activate", e => {
 });
 
 self.addEventListener("fetch", e => {
-    if (e.request.url.indexOf("firestore.googleapis.com") === -1) {
-        e.respondWith(
-            caches.match(e.request).then(cacheRes => {
-                return cacheRes || fetch(e.request).then(fetchRes => {
-                    return caches.open(dynamicCacheName).then(cache => {
-                        cache.put(e.request.url, fetchRes.clone());
-                        return fetchRes;
-                    });
-                }).catch(_ => {
-                    let url = e.request.url;
-                    console.log(url.slice(url.lastIndexOf("/") + 1), routes.includes(url.slice(url.lastIndexOf("/") + 1)));
-                    if (routes.includes(url.slice(url.lastIndexOf("/") + 1)))
-                        return caches.match("/fallback");
+    if (e.request.url.indexOf("firestore.googleapis.com") > -1) return;
+    e.respondWith(
+        caches.match(e.request).then(cacheRes => {
+            return cacheRes || fetch(e.request).then(fetchRes => {
+                return caches.open(dynamicCacheName).then(cache => {
+                    cache.put(e.request.url, fetchRes.clone());
+                    return fetchRes;
                 });
-            })
-        );
-    }
+            }).catch(_ => {
+                let url = e.request.url;
+                console.log(url.slice(url.lastIndexOf("/") + 1), routes.includes(url.slice(url.lastIndexOf("/") + 1)));
+                if (routes.includes(url.slice(url.lastIndexOf("/") + 1)))
+                    return caches.match("/fallback");
+            });
+        })
+    );
 });

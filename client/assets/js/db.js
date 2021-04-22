@@ -24,11 +24,9 @@ db.collection(collection_path).onSnapshot(snapshot=>{
         let obj = change.doc.data();
         if (change.type === "added"){
             if (!obj.isAReply){
-                console.log("called render comment");
                 renderComments(obj, change.doc.id);
             }
             else{
-                console.log("called render reply");
                 renderReplies(obj, change.doc.id);
             }
         }

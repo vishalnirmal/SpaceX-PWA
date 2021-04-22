@@ -64,7 +64,7 @@ const renderComments = async (data, id) => {
                 </div>
     `;
     let comment_tab = document.querySelector(".comments .container");
-    comment_tab.innerHTML = html + comment_tab.innerHTML;
+    comment_tab.innerHTML += html;
 }
 
 const renderReplies = (replyComment, replyId)=>{
@@ -79,7 +79,7 @@ const renderReplies = (replyComment, replyId)=>{
     let tid = setInterval(function(){
         let reply = document.querySelector("#comment"+replyComment.repliedTo+" .reply");
         if (reply){
-            reply.innerHTML = html_reply + reply.innerHTML;
+            reply.innerHTML += html_reply;
             clearInterval(tid);
         }
     }, 100);
