@@ -1,5 +1,5 @@
-const staticCacheName = "static-v33";
-const dynamicCacheName = "dynamic-v20";
+const staticCacheName = "static-v59";
+const dynamicCacheName = "dynamic-v22";
 const assets = [
     "/",
     "/fallback",
@@ -36,18 +36,12 @@ const routes = [
     "fallback"
 ];
 self.addEventListener("install", e => {
-    self.skipWaiting();
-    if (Notification.permission === "granted"){
-        navigator.serviceWorker.getRegistration()
-        .then(reg=>{
-            reg.showNotification(`Welcome to SpaceX`);
-        });
-    }
     e.waitUntil(
         caches.open(staticCacheName).then(cache => {
             cache.addAll(assets);
         })
     );
+    self.skipWaiting();
 });
 
 self.addEventListener("activate", e => {
@@ -74,10 +68,22 @@ self.addEventListener("fetch", e => {
                 });
             }).catch(_ => {
                 let url = e.request.url;
-                console.log(url.slice(url.lastIndexOf("/") + 1), routes.includes(url.slice(url.lastIndexOf("/") + 1)));
                 if (routes.includes(url.slice(url.lastIndexOf("/") + 1)))
                     return caches.match("/fallback");
             });
         })
     );
 });
+
+// self.addEventListener('notificationclick', function(e) {
+//     var notification = e.notification;
+//     var primaryKey = notification.data.primaryKey;
+//     var action = e.action;
+  
+//     if (action === 'close') {
+//       notification.close();
+//     } else {
+//         self.window.location.focus();
+//         notification.close();
+//     }
+//   });

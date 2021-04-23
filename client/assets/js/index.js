@@ -54,7 +54,7 @@ const renderComments = async (data, id) => {
                         <form class="add-comment add-reply" onsubmit="return false">
                             <input type="text" name="comment" id="comment" placeholder="Add a comment" required>
                             <div class="comment-btn">
-                                <button class="cta cta-comment">Comment</button>
+                                <button class="cta cta-comment" type="button">Comment</button>
                                 <p class="cta cta-comment cancel-btn">Cancel</p>
                             </div>
                         </form>
