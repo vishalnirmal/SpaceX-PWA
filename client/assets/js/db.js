@@ -5,27 +5,27 @@ var pusher = new Pusher('a0bb0789ce81155a04dc', {
 var channel = pusher.subscribe('comments');
 channel.bind('addComment', function (data) {
     let comment = data.data;
-    rComment(comment);
+    renderComment(comment);
 });
 channel.bind('updateComment', function (data) {
     let comment = data.data;
-    uComment(comment);
+    changeComment(comment);
 });
 channel.bind('addLike', function (data) {
     let comment = data.data;
-    uComment(comment);
+    changeComment(comment);
 });
 channel.bind('removeLike', function (data) {
     let comment = data.data;
-    uComment(comment);
+    changeComment(comment);
 });
 channel.bind('addDislike', function (data) {
     let comment = data.data;
-    uComment(comment);
+    changeComment(comment);
 });
 channel.bind('removeDislike', function (data) {
     let comment = data.data;
-    uComment(comment);
+    changeComment(comment);
 });
 channel.bind('deleteComment', function (data) {
     deleteComment(data.comment_id);
@@ -46,7 +46,7 @@ const getComments = () => {
         localStorage.setItem("likes", JSON.stringify(likes));
         localStorage.setItem("dislikes", JSON.stringify(dislikes));
         comments.forEach(comment => {
-            rComment(comment);
+            renderComment(comment);
         });
     }).catch(console.log);
 }

@@ -22,16 +22,10 @@ container.addEventListener("click", (e) => {
     if (user_id) {
         if (e.target.tagName === "P") {
             if (e.target.classList.contains("reply-btn")) {
-                // let comment = e.target.parentElement.parentElement.parentElement;
-                // comment.classList.add("show-reply-form");
                 comment_element.classList.add("show-reply-form");
             } else if (e.target.classList.contains("cancel-btn")) {
-                // let comment = e.target.parentElement.parentElement.parentElement.parentElement;
-                // comment.classList.remove("show-reply-form");
                 comment_element.classList.remove("show-reply-form");
             } else if (e.target.classList.contains("cancel-update-btn")) {
-                // let comment = e.target.parentElement.parentElement.parentElement.parentElement;
-                // comment.classList.remove("edit");
                 comment_element.classList.remove("edit");
             }
         } 
@@ -54,9 +48,7 @@ container.addEventListener("click", (e) => {
                 }
                 localStorage.setItem("likes", JSON.stringify(likes));
                 localStorage.setItem("dislikes", JSON.stringify(dislikes));
-                // type = (likes.includes(comment_id)) ? "removeLike" : "addLike";
                 updateComment(comment, type);
-
             } else if (e.target.classList.contains("dislike")) {
                 if (indexd > -1) {
                     type = "removeDislike";
@@ -69,14 +61,11 @@ container.addEventListener("click", (e) => {
                 }
                 localStorage.setItem("likes", JSON.stringify(likes));
                 localStorage.setItem("dislikes", JSON.stringify(dislikes));
-                // type = (dislikes.includes(comment_id)) ? "removeDislike" : "addDislike";
                 updateComment(comment, type);
             } else if (e.target.classList.contains("delete")) {
                 type = "deleteComment";
                 updateComment(comment, type);
             } else if (e.target.classList.contains("edit")) {
-                // let edit_comment = document.querySelector(`.comment[data-id="${comment_id}"]`);
-                // edit_comment.classList.add("edit");
                 comment_element.classList.add("edit");
             }
         } else if (e.target.tagName === "BUTTON") {
@@ -103,240 +92,12 @@ container.addEventListener("click", (e) => {
     }
 });
 
-const renderComments = (comment) => {
-    let likes = localStorage.getItem("likes");
-    let dislikes = localStorage.getItem("dislikes");
-    let reply_button = `<p class="cta cta-comment reply-btn" data-id="${comment._id}">Relpy</p>`;
-    let user_previleges = `<div class="count">
-                            <p class="count-btn" data-id="${comment._id}"><i class="far fa-trash-alt delete" data-id="${comment._id}"></i></p>
-                        </div>
-                        <div class="count">
-                            <p class="count-btn" data-id="${comment._id}"><i class="far fa-edit edit" data-id="${comment._id}"></i></p>
-                        </div>`;
-    let reply_form = `
-                        <form class="add-comment add-reply" onsubmit="return false">
-                            <input type="text" name="comment" id="comment" placeholder="Add a comment" autocomplete="off" required>
-                            <div class="comment-btn">
-                                <button class="cta cta-comment" type="button" data-id="${comment._id}">Comment</button>
-                                <p class="cta cta-comment cancel-btn" data-id="${comment._id}">Cancel</p>
-                            </div>
-                        </form>`;
-    let update_form = `
-                        <form class="add-comment update-comment" onsubmit="return false">
-                            <input type="text" name="comment" id="comment" value="${comment.text}" autocomplete="off" required>
-                            <div class="comment-btn">
-                                <button class="cta cta-comment" type="button" data-id="${comment._id}">Update</button>
-                                <p class="cta cta-comment cancel-update-btn" data-id="${comment._id}">Cancel</p>
-                            </div>
-                        </form>`;
-    let comment_text = `<p class="comment-text">${comment.text}</p>`;
-    let html = `
-                <div class="comment" data-id="${comment._id}">
-                    <img src="images/comments/profile-picture.png" alt="Profile picture of ${comment.user.name}">
-                    <div class="comment-section">
-                        <p class="name">${comment.user.name} <span class="date">${new Date(comment.date).toLocaleDateString()}</span></p>
-                        ${update_form}
-                        ${comment_text}
-                        <div class="ctas">
-                            <div class="count">
-                                <p class="count-btn" data-id="${comment._id}"><i class="fa-heart like ${(likes.includes(comment._id))?"fas":"far"}" data-id="${comment._id}"></i></p>
-                                <p>${comment.likes.length}</p>
-                            </div>
-                            <div class="count">
-                                <p class="count-btn" data-id="${comment._id}"><i class="fa-thumbs-down dislike ${(dislikes.includes(comment._id))?"fas":"far"}" data-id="${comment._id}"></i></p>
-                                <p>${comment.dislikes.length}</p>
-                            </div>
-                            ${
-                                (user_id)?reply_button:""
-                            }
-                            
-                            ${
-                                (user_id === comment.user._id)?user_previleges:""
-                            }
-                        </div>
-                        ${
-                            (user_id)?reply_form:""
-                        }
-                        <div class="reply">
-                        </div>
-                    </div>
-                </div>
-    `;
-    let comment_tab = document.querySelector(".comments .container");
-    comment_tab.innerHTML += html;
-    comment.replies.forEach(reply => {
-        renderReplies(reply, comment._id);
-    });
-}
-
-
-const updateComments = (comment) => {
-    let likes = localStorage.getItem("likes");
-    let dislikes = localStorage.getItem("dislikes");
-    let reply_button = `<p class="cta cta-comment reply-btn" data-id="${comment._id}">Relpy</p>`;
-    let user_previleges = `<div class="count">
-                            <p class="count-btn" data-id="${comment._id}"><i class="far fa-trash-alt delete" data-id="${comment._id}"></i></p>
-                        </div>
-                        <div class="count">
-                            <p class="count-btn" data-id="${comment._id}"><i class="far fa-edit edit" data-id="${comment._id}"></i></p>
-                        </div>`;
-    let reply_form = `
-                        <form class="add-comment add-reply" onsubmit="return false">
-                            <input type="text" name="comment" id="comment" placeholder="Add a comment" autocomplete="off" required>
-                            <div class="comment-btn">
-                                <button class="cta cta-comment" type="button" data-id="${comment._id}">Comment</button>
-                                <p class="cta cta-comment cancel-btn" data-id="${comment._id}">Cancel</p>
-                            </div>
-                        </form>`;
-    let update_form = `
-                        <form class="add-comment update-comment" onsubmit="return false">
-                            <input type="text" name="comment" id="comment" value="${comment.text}" autocomplete="off" required>
-                            <div class="comment-btn">
-                                <button class="cta cta-comment" type="button" data-id="${comment._id}">Update</button>
-                                <p class="cta cta-comment cancel-update-btn" data-id="${comment._id}">Cancel</p>
-                            </div>
-                        </form>`;
-    let comment_text = `<p class="comment-text">${comment.text}</p>`;
-    let html = `
-                    <img src="images/comments/profile-picture.png" alt="Profile picture of ${comment.user.name}">
-                    <div class="comment-section">
-                        <p class="name">${comment.user.name} <span class="date">${new Date(comment.date).toLocaleDateString()}</span></p>
-                        ${update_form}
-                        ${comment_text}
-                        <div class="ctas">
-                            <div class="count">
-                                <p class="count-btn" data-id="${comment._id}"><i class="fa-heart like ${(likes.includes(comment._id))?"fas":"far"}" data-id="${comment._id}"></i></p>
-                                <p>${comment.likes.length}</p>
-                            </div>
-                            <div class="count">
-                                <p class="count-btn" data-id="${comment._id}"><i class="fa-thumbs-down dislike ${(dislikes.includes(comment._id))?"fas":"far"}" data-id="${comment._id}"></i></p>
-                                <p>${comment.dislikes.length}</p>
-                            </div>
-                            ${
-                                (user_id)?reply_button:""
-                            }
-                            
-                            ${
-                                (user_id === comment.user._id)?user_previleges:""
-                            }
-                        </div>
-                        ${
-                            (user_id)?reply_form:""
-                        }
-                        <div class="reply">
-                        </div>
-                    </div>
-    `;
-    let comment_tab = document.querySelector(`.comment[data-id="${comment._id}"]`);
-    comment_tab.innerHTML = html;
-    comment.replies.forEach(reply => {
-        renderReplies(reply, comment._id);
-    });
-}
-
-const renderReplies = (comment) => {
-    let likes = localStorage.getItem("likes");
-    let dislikes = localStorage.getItem("dislikes");
-    let user_previleges = `<div class="count">
-                            <p class="count-btn" data-id="${comment._id}"><i class="far fa-trash-alt delete" data-id="${comment._id}"></i></p>
-                        </div>
-                        <div class="count">
-                            <p class="count-btn" data-id="${comment._id}"><i class="far fa-edit edit" data-id="${comment._id}"></i></p>
-                        </div>`;
-    let update_form = `
-                        <form class="add-comment update-comment" onsubmit="return false">
-                            <input type="text" name="comment" id="comment" value="${comment.text}" autocomplete="off" required>
-                            <div class="comment-btn">
-                                <button class="cta cta-comment" type="button" data-id="${comment._id}">Update</button>
-                                <p class="cta cta-comment cancel-update-btn" data-id="${comment._id}">Cancel</p>
-                            </div>
-                        </form>`;
-    let comment_text = `<p class="comment-text">${comment.text}</p>`;
-    let html_reply = `
-                    <div class="comment" data-id="${comment._id}">
-                        <img src="images/comments/profile-picture.png" alt="User Profile picture of ${comment.user.name}">
-                        <div class="comment-section">
-                            <p class="name">${comment.user.name} <span class="date">${new Date(comment.date).toLocaleDateString()}</span></p>
-                            ${update_form}
-                            ${comment_text}
-                            <div class="ctas">
-                                <div class="count">
-                                    <p class="count-btn " data-id="${comment._id}"><i class="fa-heart like ${(likes.includes(comment._id))?"fas":"far"}" data-id=${comment._id}></i></p>
-                                    <p>${comment.likes.length}</p>
-                                </div>
-                                <div class="count">
-                                    <p class="count-btn " data-id="${comment._id}"><i class="fa-thumbs-down dislike ${(dislikes.includes(comment._id))?"fas":"far"}" data-id=${comment._id}></i></p>
-                                    <p>${comment.dislikes.length}</p>
-                                </div>
-                                ${
-                                    (user_id === comment.user._id)?user_previleges:""
-                                }
-                            </div>
-                        </div>
-                    </div>`;
-    let tid = setInterval(function () {
-        let reply = document.querySelector(`.comment[data-id="${comment.replied_to}"] .reply`);
-        if (reply) {
-            reply.innerHTML += html_reply;
-            clearInterval(tid);
-        }
-    }, 100);
-}
-
-const updateReplies = (comment) => {
-    let likes = localStorage.getItem("likes");
-    let dislikes = localStorage.getItem("dislikes");
-    let user_previleges = `<div class="count">
-                            <p class="count-btn" data-id="${comment._id}"><i class="far fa-trash-alt delete" data-id="${comment._id}"></i></p>
-                        </div>
-                        <div class="count">
-                            <p class="count-btn" data-id="${comment._id}"><i class="far fa-edit edit" data-id="${comment._id}"></i></p>
-                        </div>`;
-    let update_form = `
-                        <form class="add-comment update-comment" onsubmit="return false">
-                            <input type="text" name="comment" id="comment" value="${comment.text}" autocomplete="off" required>
-                            <div class="comment-btn">
-                                <button class="cta cta-comment" type="button" data-id="${comment._id}">Update</button>
-                                <p class="cta cta-comment cancel-update-btn" data-id="${comment._id}">Cancel</p>
-                            </div>
-                        </form>`;
-    let comment_text=`<p class="comment-text">${comment.text}</p>`;
-    let html_reply = `<img src="images/comments/profile-picture.png" alt="User Profile picture of ${comment.user.name}">
-                        <div class="comment-section">
-                            <p class="name">${comment.user.name} <span class="date">${new Date(comment.date).toLocaleDateString()}</span></p>
-                            ${update_form}
-                            ${comment_text}
-                            <div class="ctas">
-                                <div class="count">
-                                    <p class="count-btn " data-id="${comment._id}"><i class="fa-heart like ${(likes.includes(comment._id))?"fas":"far"}" data-id=${comment._id}></i></p>
-                                    <p>${comment.likes.length}</p>
-                                </div>
-                                <div class="count">
-                                    <p class="count-btn " data-id="${comment._id}"><i class="fa-thumbs-down dislike ${(dislikes.includes(comment._id))?"fas":"far"}" data-id=${comment._id}></i></p>
-                                    <p>${comment.dislikes.length}</p>
-                                </div>
-                                ${
-                                    (user_id === comment.user._id)?user_previleges:""
-                                }
-                            </div>
-                        </div>`;
-    let reply_area = document.querySelector(`.comment[data-id="${comment._id}"]`);
-    reply_area.innerHTML = html_reply;
-    // let tid = setInterval(function () {
-
-    //     if (reply) {
-
-    //         clearInterval(tid);
-    //     }
-    // }, 100);
-}
-
 const deleteComment = (comment_id) => {
     let comment = document.querySelector(`.comment[data-id="${comment_id}"]`);
     comment.remove();
 }
 
-const rComment = (comment)=>{
+const renderComment = (comment)=>{
     let likes = localStorage.getItem("likes");
     let dislikes = localStorage.getItem("dislikes");
     let is_a_comment = !(comment.replied_to);
@@ -399,7 +160,7 @@ const rComment = (comment)=>{
         let comment_tab = document.querySelector(".comments .container");
         comment_tab.innerHTML += html;
         comment.replies.forEach(reply => {
-            renderReplies(reply, comment._id);
+            renderComment(reply);
         });
     }
     else{
@@ -408,7 +169,7 @@ const rComment = (comment)=>{
     }
 }
 
-const uComment = (comment)=>{
+const changeComment = (comment)=>{
     let likes = localStorage.getItem("likes");
     let dislikes = localStorage.getItem("dislikes");
     let is_a_comment = !(comment.replied_to);
@@ -469,7 +230,7 @@ const uComment = (comment)=>{
         let comment_tab = document.querySelector(`.comment[data-id="${comment._id}"]`);
         comment_tab.innerHTML = html;
         comment.replies.forEach(reply => {
-            renderReplies(reply, comment._id);
+            renderComment(reply);
         });
     }
     else{
