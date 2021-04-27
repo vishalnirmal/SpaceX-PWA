@@ -39,15 +39,21 @@
                 margin: 0.5rem 0;
                 display: flex;
                 gap: 1rem;
+                .like{
+                    color: tomato;
+                }
+                .dislike{
+                    color: white;
+                }
             }
             .count{
                 display: flex;
                 align-items: center;
-                gap: 5px;
+                gap: 8px;
             }
             .count-btn{
-                all: unset;
                 cursor: pointer;
+                transition: all 0.2s;
             }
             .count-btn:hover{
                 filter: brightness(50%);
@@ -61,11 +67,24 @@
                 display: none;
             }
         }
-        .show-reply-form .add-comment{
+        .edit.comment{
+            & > .comment-section > .add-comment.update-comment{
+                display: block;
+                margin: 10px 0;
+            }
+            & > .comment-section > .comment-text{
+                display: none;
+            }
+        }
+        .show-reply-form .add-comment.add-reply{
             display: block;
         }
     }
+    .hidden.add-comment{
+        display: none;
+    }
     .add-comment{
+        display: block;
         #comment{
             padding: 8px 15px;
             width: calc(100% - 30px - 2px);

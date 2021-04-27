@@ -27,11 +27,33 @@ header .menu {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   gap: 2rem;
+}
+
+header .menu .icon-menu {
+  width: 18px;
+  height: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
 }
 
 header .menu-items {
   position: relative;
+  cursor: pointer;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 header .menu-items:hover::after {
@@ -47,7 +69,7 @@ header .mobile-menu {
   display: none;
 }
 
-header .icon-menu {
+header .mobile-menu .mobile-menu-items {
   display: none;
 }
 
@@ -73,13 +95,37 @@ header.show-menu .mobile-menu {
   z-index: 4;
 }
 
+header.show-menu .mobile-menu .menu-items:hover::after {
+  border-color: black;
+}
+
+header.show-menu .mobile-menu .border {
+  width: 100%;
+  border-bottom: 1px solid #333;
+}
+
+header.show-menu .mobile-menu .logout {
+  display: none;
+}
+
+body[user-id] .login, body[user-id] .register {
+  display: none;
+}
+
+body[user-id] header.show-menu .mobile-menu .logout {
+  display: block;
+}
+
 @media (max-width: 768px) {
-  header .menu {
+  header ul.menu {
     display: none;
   }
   header .icon-menu {
     display: block;
     cursor: pointer;
+  }
+  header .mobile-menu .mobile-menu-items {
+    display: block;
   }
 }
 /*# sourceMappingURL=header.css.map */

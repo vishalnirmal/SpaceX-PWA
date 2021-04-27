@@ -1,0 +1,70 @@
+$bgColor: black;
+$textColor: white;
+
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+$fontfamily: 'Play',
+sans-serif;
+
+body {
+    background-color: $bgColor;
+    color: $textColor;
+    font-family: $fontfamily;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+    height: calc(100vh - 74.25px - 59px - 40px);
+    width: calc(100% - 40px);
+    max-width: 450px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    justify-content: center;
+    align-items: center;
+    .form {
+        width: 100%;
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            #username, #password, #name{
+                padding: 8px 15px;
+                width: calc(100% - 30px - 2px);
+                background-color: black;
+                border: 1px solid white;
+                color: white;
+            }
+            .error{
+                display: none;
+                padding: 8px 15px;
+                width: calc(100% - 30px);
+                background-color: tomato;
+                color: white;
+                text-align: center;
+            }
+            .show-error.error{
+                display: block;
+            }
+        }
+    }
+    .cta{
+        width: max-content;
+        padding: 8px 15px;
+        font-size: 1rem;
+    }
+    p{
+        font-size: 0.7em;
+        span.cta{
+            margin: auto 10px;
+            font-size: 0.8em;
+        }
+    }
+}
+
+h3 {
+    text-align: center;
+    max-width: 600px;
+}

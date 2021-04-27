@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("common-links") %>
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <title>Register</title>
+</head>
+
+<body>
+    <%- include("header") %>
+    <main>
+        <h2>Register</h2>
+        <section class="form">
+            <form id="register">
+                <p class="error"></p>
+                <input type="text" name="name" id="name" placeholder="Name" aria-label="Name" autocomplete="off"
+                    required>
+                <input type="text" name="username" id="username" placeholder="Username" aria-label="Username"
+                    autocomplete="off" required>
+                <input type="password" name="password" id="password" placeholder="Password" aria-label="Password"
+                    autocomplete="off" required>
+                <button type="submit" class="cta">Register</button>
+            </form>
+        </section>
+        <p>Already have an account? <a href="/user/login"><span class="cta">Log In</span></p></a>
+    </main>
+    <%- include("footer") %> 
+    <script src="/js/loginHandler.js"></script>
+</body>
+
+</html>

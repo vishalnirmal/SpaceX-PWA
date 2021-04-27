@@ -62,6 +62,14 @@
   gap: 1rem;
 }
 
+.comments .container .comment .ctas .like {
+  color: tomato;
+}
+
+.comments .container .comment .ctas .dislike {
+  color: white;
+}
+
 .comments .container .comment .count {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -69,12 +77,13 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
 .comments .container .comment .count-btn {
-  all: unset;
   cursor: pointer;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .comments .container .comment .count-btn:hover {
@@ -93,7 +102,24 @@
   display: none;
 }
 
-.comments .container .show-reply-form .add-comment {
+.comments .container .edit.comment > .comment-section > .add-comment.update-comment {
+  display: block;
+  margin: 10px 0;
+}
+
+.comments .container .edit.comment > .comment-section > .comment-text {
+  display: none;
+}
+
+.comments .container .show-reply-form .add-comment.add-reply {
+  display: block;
+}
+
+.comments .hidden.add-comment {
+  display: none;
+}
+
+.comments .add-comment {
   display: block;
 }
 

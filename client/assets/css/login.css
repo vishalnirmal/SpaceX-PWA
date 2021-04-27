@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap");
+body {
+  background-color: black;
+  color: white;
+  font-family: "Play", sans-serif;
+}
+
+main {
+  padding: 20px;
+  text-align: center;
+  height: calc(100vh - 74.25px - 59px - 40px);
+  width: calc(100% - 40px);
+  max-width: 450px;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .form {
+  width: 100%;
+}
+
+main .form form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+
+main .form form #username, main .form form #password, main .form form #name {
+  padding: 8px 15px;
+  width: calc(100% - 30px - 2px);
+  background-color: black;
+  border: 1px solid white;
+  color: white;
+}
+
+main .form form .error {
+  display: none;
+  padding: 8px 15px;
+  width: calc(100% - 30px);
+  background-color: tomato;
+  color: white;
+  text-align: center;
+}
+
+main .form form .show-error.error {
+  display: block;
+}
+
+main .cta {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 8px 15px;
+  font-size: 1rem;
+}
+
+main p {
+  font-size: 0.7em;
+}
+
+main p span.cta {
+  margin: auto 10px;
+  font-size: 0.8em;
+}
+
+h3 {
+  text-align: center;
+  max-width: 600px;
+}
+/*# sourceMappingURL=login.css.map */

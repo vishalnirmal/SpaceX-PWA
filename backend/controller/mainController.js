@@ -19,6 +19,12 @@ let startship = (req, res)=>{
 let fallback = (req, res)=>{
     res.render("fallback");
 }
+let login = (req, res)=>{
+    res.render("login");
+}
+let register = (req, res)=>{
+    res.render("register");
+}
 
 module.exports = {
 
@@ -28,5 +34,7 @@ module.exports = {
     dragon,
     startship,
     journey,
-    fallback
+    fallback,
+    login,
+    register
 };
