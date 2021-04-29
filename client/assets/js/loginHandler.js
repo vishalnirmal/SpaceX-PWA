@@ -1,4 +1,4 @@
-if (user){
+if (localStorage.getItem('user')){
     history.back();
 }
 

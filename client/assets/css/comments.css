@@ -102,12 +102,12 @@
   display: none;
 }
 
-.comments .container .edit.comment > .comment-section > .add-comment.update-comment {
+.comments .container .edit.comment > .comment-section > .details > .add-comment.update-comment {
   display: block;
   margin: 10px 0;
 }
 
-.comments .container .edit.comment > .comment-section > .comment-text {
+.comments .container .edit.comment > .comment-section > .details > .comment-text {
   display: none;
 }
 

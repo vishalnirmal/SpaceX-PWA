@@ -18,22 +18,14 @@ router.route("/user/register")
     .post(loginController.register);
 router.route("/api/comments/addComment")
     .post(apiController.addComment);
-router.route("/api/comments/updateComment")
-    .post(apiController.updateComment);
 router.route("/api/comments/deleteComment")
     .post(apiController.deleteComment);
 router.route("/api/comments/getComments/:post_id")
     .get(apiController.getComments);
 router.route("/api/comments/getComments/:post_id/:id")
     .get(apiController.getComments);
-router.route("/api/comments/addLike")
-    .post(apiController.addLike);
-router.route("/api/comments/removeLike")
-    .post(apiController.removeLike);
-router.route("/api/comments/addDislike")
-    .post(apiController.addDislike);
-router.route("/api/comments/removeDislike")
-    .post(apiController.removeDislike);
+router.route("/api/comments/updateComment/:type")
+    .post(apiController.updateComment);
 router.route("/api/posts/addPost")
     .post(apiController.addPost);
 router.route("/api/posts/getPost")

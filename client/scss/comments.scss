@@ -68,11 +68,11 @@
             }
         }
         .edit.comment{
-            & > .comment-section > .add-comment.update-comment{
+            & > .comment-section > .details > .add-comment.update-comment{
                 display: block;
                 margin: 10px 0;
             }
-            & > .comment-section > .comment-text{
+            & > .comment-section > .details > .comment-text{
                 display: none;
             }
         }

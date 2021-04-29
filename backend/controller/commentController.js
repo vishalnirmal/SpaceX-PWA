@@ -6,8 +6,7 @@ const addComment = async (obj) => {
         Comment.create(obj).then(async(response) => {
             if (!response)
                 reject("Unable to add comment");
-            let comment = await response.populate('user').execPopulate();
-            resolve(comment);
+            resolve(response);
         }).catch(reject);
     });
 }
@@ -19,14 +18,7 @@ const updateComment = async (whereClause, obj) => {
         }).then(async(response) => {
             if (!response)
                 reject("No comment to update");
-            let comment = await response.populate('user').populate({
-                path: 'replies',
-                populate: {
-                    path: 'user',
-                    select: 'name'
-                }
-            }).execPopulate();
-            resolve(comment);
+            resolve(response);
         }).catch(reject);
     });
 }
@@ -44,18 +36,7 @@ const getComment = async (whereClause) => {
 const getComments = async (post_id) => {
     return new Promise((resolve, reject) => {
         Comment.find({
-                replied_to: {
-                    $exists: false
-                },
                 post: post_id
-            })
-            .populate('user', 'name')
-            .populate({
-                path: "replies",
-                populate: {
-                    path: "user",
-                    select: "name"
-                }
             })
             .then(response => {
                 resolve(response);
@@ -69,24 +50,7 @@ const deleteComment = async (whereClause) => {
         Comment.findOneAndDelete(whereClause).then(response=>{
             if (!response)
                 reject("The comment which was to be removed didn't exist");
-            Promise.all(response.replies.map(reply=>{
-                return deleteComment({
-                    _id: reply._id
-                });
-            })).then(_=>{
-                if (!response.replied_to){
-                    updateComment({
-                        replies: response._id
-                    }, {
-                        $pull: {
-                            replies: response._id
-                        }
-                    }).then(_=>{
-                        resolve(response);
-                    }).catch(reject);
-                }
-                resolve(response);
-            }).catch(reject);
+            resolve(response);
         }).catch(reject);
     });
 }

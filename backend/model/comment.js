@@ -1,19 +1,39 @@
 const mongoose = require("mongoose");
+const uuid = require("uuid");
 
 const commentSchema = new mongoose.Schema({
+    _id: {
+        type: String,
+        default: function genUUID(){
+            return uuid.v4()
+        }
+    },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'User'
     },
+    username: {
+        type: String,
+        required: true
+    },
     text: String,
-    replies: [this],
-    replied_to: mongoose.Schema.Types.ObjectId,
+    replies: [{
+        type: String,
+        ref: 'Comment'
+    }],
+    replied_to: String,
     likes: {
-        type: [mongoose.Schema.Types.ObjectId],
+        type: [{
+            type: String,
+            ref: 'User'
+        }],
         default: []
     },
     dislikes: {
-        type: [mongoose.Schema.Types.ObjectId],
+        type: [{
+            type: String,
+            ref: 'User'
+        }],
         default: []
     },
     date: {
@@ -21,7 +41,7 @@ const commentSchema = new mongoose.Schema({
         default: Date.now()
     },
     post: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Post'
     }
 });
