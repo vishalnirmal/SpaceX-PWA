@@ -4,9 +4,7 @@ const uuid = require("uuid");
 const commentSchema = new mongoose.Schema({
     _id: {
         type: String,
-        default: function genUUID(){
-            return uuid.v4()
-        }
+        default: () => uuid.v4()
     },
     user: {
         type: String,
@@ -38,7 +36,7 @@ const commentSchema = new mongoose.Schema({
     },
     date: {
         type: Number,
-        default: Date.now()
+        default: _ => Date.now()
     },
     post: {
         type: String,

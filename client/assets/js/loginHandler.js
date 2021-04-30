@@ -1,25 +1,24 @@
-if (localStorage.getItem('user')){
+if (localStorage.getItem('user')) {
     history.back();
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', () => {
     let form = document.querySelector("form");
     let error = document.querySelector("p.error");
-    form.addEventListener("submit", async (e)=>{
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
         let details = {};
         if (e.target.name)
             details["name"] = e.target.name.value;
         details["username"] = e.target.username.value;
         details["password"] = e.target.password.value;
-        let useFunction = (form.id === "login")? login: register;
+        let useFunction = (form.id === "login") ? login : register;
         let response = await useFunction(details);
-        if (response.code === 200){
+        if (response.code === 200) {
             error.classList.remove("show-error");
             localStorage.setItem("user", JSON.stringify(response.data));
             history.back();
-        }
-        else{
+        } else {
             error.classList.add("show-error");
             error.textContent = response.message;
         }
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 });
 
-async function login(details){
+async function login(details) {
     let response = await fetch("/user/login", {
         method: "POST",
         headers: {
@@ -39,7 +38,7 @@ async function login(details){
     return response.json();
 }
 
-async function register(details){
+async function register(details) {
     let response = await fetch("/user/register", {
         method: "POST",
         headers: {

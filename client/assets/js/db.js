@@ -5,7 +5,8 @@ let idb = async function (dbname, collection) {
         let db = null;
         let dbReq = indexedDB.open(dbname, 1);
         dbReq.onerror = (error) => {
-            reject(error);
+            reject("Unable to open database, are you in private mode?");
+            alert("Unable to open database, are you in private mode? If so then switch to normal mode to access spacex-wiki");
         }
         dbReq.onsuccess = (ev) => {
             db = ev.target.result;
@@ -20,15 +21,14 @@ let idb = async function (dbname, collection) {
                 let commentStore = db.createObjectStore('commentStore', {
                     keyPath: '_id'
                 });
-                commentStore.createIndex('commentByPost', 'post', {
+                commentStore.createIndex('commentByPost', ['date', 'post'], {
                     unique: false
                 });
-            } else if (!db.objectStoreNames.contains('syncStore')) {
-                db.createObjectStore('syncStore', {
+            }
+            if (!db.objectStoreNames.contains('transactionStore')) {
+                db.createObjectStore('transactionStore', {
                     autoIncrement: true
                 });
-            } else {
-                resolve(functions);
             }
         }
         const add = async (comment) => {
@@ -76,14 +76,16 @@ let idb = async function (dbname, collection) {
                 var request;
                 if (collection === 'commentStore') {
                     let postIndex = store.index('commentByPost');
-                    request = postIndex.getAll(IDBKeyRange.bound(post, post));
-                }
-                else{
+                    request = postIndex.getAll();
+                } else {
                     request = store.getAll();
                 }
                 let comments = [];
                 request.onsuccess = (ev) => {
-                    comments = ev.target.result;
+                    if (collection === 'commentStore')
+                        comments = ev.target.result.filter(comment=>comment.post === post);
+                    else
+                        comments = ev.target.result;
                 }
                 request.onerror = reject;
             });

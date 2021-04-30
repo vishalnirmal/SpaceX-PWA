@@ -27,14 +27,23 @@ container.addEventListener("click", (e) => {
             } else if (e.target.classList.contains("cancel-update-btn")) {
                 comment_element.classList.remove("edit");
             }
-        } 
-        else if (e.target.tagName === "I") {
+        } else if (e.target.tagName === "I") {
             let comment = {
                 comment_id
             };
             if (e.target.classList.contains("like")) {
+                if (e.target.classList.contains("fas"))
+                    comment.operation = "remove";
+                else if (e.target.classList.contains("far")) {
+                    comment.operation = "add";
+                }
                 updateComment(comment, "like");
             } else if (e.target.classList.contains("dislike")) {
+                if (e.target.classList.contains("fas"))
+                    comment.operation = "remove";
+                else if (e.target.classList.contains("far")) {
+                    comment.operation = "add";
+                }
                 updateComment(comment, "dislike");
             } else if (e.target.classList.contains("delete")) {
                 deleteCommentFromDb(comment);
@@ -53,26 +62,35 @@ container.addEventListener("click", (e) => {
                 };
                 sendComment(comment);
                 comment_element.classList.remove("show-reply-form");
+                form.comment.value = "";
             } else if (form.classList.contains("update-comment")) {
+                let previous_text = comment_element.querySelector('p.comment-text').textContent;
                 let comment = {
                     text: comment_field,
                     comment_id: e.target.getAttribute("data-id")
                 }
-                updateComment(comment, "updateText");
+                if (previous_text !== comment_field) {
+                    updateComment(comment, "updateText");
+                    form.comment.value = "";
+                }
                 comment_element.classList.remove("edit");
             }
-            form.comment.value = "";
+
         }
     }
 });
 
 const deleteComment = (comment_id) => {
-    let comment = document.querySelector(`.comment[data-id="${comment_id}"]`);
-    if (comment)
-        comment.remove();
+    let repeat = setInterval(() => {
+        let comment = document.querySelector(`.comment[data-id="${comment_id}"]`);
+        if (comment) {
+            comment.remove();
+            clearInterval(repeat);
+        }
+    }, 100);
 }
 
-const renderComment = (comment)=>{
+const renderComment = (comment) => {
     let is_a_comment = !(comment.replied_to);
     let reply_button = `<p class="cta cta-comment reply-btn" data-id="${comment._id}">Relpy</p>`;
     let user_previleges = `<div class="count">
@@ -131,17 +149,24 @@ const renderComment = (comment)=>{
                     </div>
                 </div>
     `;
-    if (is_a_comment){
-        let comment_tab = document.querySelector(".comments .container");
-        comment_tab.innerHTML += html;
-    }
-    else{
-        let reply = document.querySelector(`.comment[data-id="${comment.replied_to}"] .reply`);
-        reply.innerHTML += html;
-    }
+    let repeat = setInterval(() => {
+        if (is_a_comment) {
+            let comment_tab = document.querySelector(".comments .container");
+            if (comment_tab) {
+                comment_tab.innerHTML += html;
+                clearInterval(repeat);
+            }
+        } else {
+            let reply = document.querySelector(`.comment[data-id="${comment.replied_to}"] .reply`);
+            if (reply) {
+                reply.innerHTML += html;
+                clearInterval(repeat);
+            }
+        }
+    }, 100);
 }
 
-const changeComment = (comment)=>{
+const changeComment = (comment) => {
     let is_a_comment = !(comment.replied_to);
     let reply_button = `<p class="cta cta-comment reply-btn" data-id="${comment._id}">Relpy</p>`;
     let user_previleges = `<div class="count">
@@ -180,6 +205,11 @@ const changeComment = (comment)=>{
                             }
                         </div>
     `;
-    let comment_tab = document.querySelector(`.comment[data-id="${comment._id}"] .details`);
-    comment_tab.innerHTML = html;
+    let repeat = setInterval(() => {
+        let comment_tab = document.querySelector(`.comment[data-id="${comment._id}"] .details`);
+        if (comment_tab) {
+            comment_tab.innerHTML = html;
+            clearInterval(repeat);
+        }
+    }, 100);
 }

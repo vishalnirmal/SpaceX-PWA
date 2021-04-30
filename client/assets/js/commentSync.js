@@ -3,71 +3,84 @@ let syncer = async () => {
     let commentDb = await idb('demoDb', 'commentStore');
     const addComment = async (comment) => {
         let obj = await commentDb.add(comment);
-        if (obj.replied_to) {
-            let comment = await commentDb.get(obj.replied_to);
-            comment.replies.push(obj._id);
-            await commentDb.put(comment);
+        if (obj) {
+            if (obj.replied_to) {
+                let comment = await commentDb.get(obj.replied_to);
+                comment.replies.push(obj._id);
+                await commentDb.put(comment);
+            }
+            if (comment.post === post_id)
+                renderComment(comment);
         }
-        if (comment.post === post_id)
-            renderComment(comment);
     }
     const getComments = async (post) => {
         let comments = await commentDb.getAll(post);
         if (post === post_id)
             comments.forEach(comment => {
-                renderComment(comment);
+                if (!comment.replied_to)
+                    renderComment(comment);
             });
+        comments.forEach(comment => {
+            if (comment.replied_to)
+                renderComment(comment);
+        });
     }
     const removeComment = async (obj) => {
         let comment = await commentDb.get(obj.comment_id);
-        if (comment.user === obj.user_id) {
-            comment = await commentDb._delete(obj.comment_id);
-            if (comment.replied_to){
+        if (comment && comment.user === obj.user_id) {
+            comment = await commentDb._delete(obj.comment_id).catch(console.log);
+            if (comment.replied_to) {
                 let parent = await commentDb.get(comment.replied_to);
                 parent.replies.splice(parent.replies.indexOf(comment._id), 1);
                 await commentDb.put(parent);
-            }
-            else{
+            } else {
                 await Promise.all(comment.replies.map(reply_id => {
                     return commentDb._delete(reply_id);
                 }));
             }
-            if (comment.post === post_id)
+            if (comment.post === post_id) {
                 deleteComment(comment._id);
+            }
         }
     }
     const updateComment = async (type, obj) => {
         const updateLike = (comment, obj) => {
             let {
-                user_id
+                user_id,
+                operation
             } = obj;
             let inLike = comment.likes.indexOf(user_id);
             let inDislike = comment.dislikes.indexOf(user_id);
-            if (inLike > -1){
-                comment.likes.splice(inLike, 1);
-            }
-            else{
-                if (inDislike > -1){
-                    comment.dislikes.splice(inDislike, 1);
+            if (inLike > -1) {
+                if (operation === 'remove')
+                    comment.likes.splice(inLike, 1);
+            } else {
+                if (operation === 'add') {
+                    if (inDislike > -1) {
+                        comment.dislikes.splice(inDislike, 1);
+                    }
+                    comment.likes.push(user_id);
                 }
-                comment.likes.push(user_id);
             }
             return comment;
         }
         const updateDislike = (comment, obj) => {
             let {
-                user_id
+                user_id,
+                operation
             } = obj;
             let inLike = comment.likes.indexOf(user_id);
             let inDislike = comment.dislikes.indexOf(user_id);
-            if (inDislike > -1){
-                comment.dislikes.splice(inDislike, 1);
-            }
-            else{
-                if (inLike > -1){
-                    comment.likes.splice(inLike, 1);
+            if (inDislike > -1) {
+                if (operation === 'remove')
+                    comment.dislikes.splice(inDislike, 1);
+            } else {
+                if (operation === 'add') {
+                    if (inLike > -1) {
+                        comment.likes.splice(inLike, 1);
+                    }
+                    comment.dislikes.push(user_id);
                 }
-                comment.dislikes.push(user_id);
             }
             return comment;
         }
@@ -85,7 +98,7 @@ let syncer = async () => {
             updatedComment = updateDislike(comment, obj);
         else if (type === 'updateText')
             updatedComment = updateText(comment, obj);
-        await commentDb.put(updatedComment);
+        await commentDb.put(updatedComment).catch(console.log);
         if (updatedComment.post === post_id)
             changeComment(updatedComment);
     }

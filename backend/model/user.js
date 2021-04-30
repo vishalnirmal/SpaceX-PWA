@@ -4,9 +4,7 @@ const uuid = require("uuid");
 const userSchema = mongoose.Schema({
     _id: {
         type: String,
-        default: function genUUID(){
-            return uuid.v4()
-        }
+        default: () => uuid.v4()
     },
     password: {
         type: String,
@@ -20,7 +18,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     }
-}); 
+});
 
 const User = mongoose.model("User", userSchema);
 

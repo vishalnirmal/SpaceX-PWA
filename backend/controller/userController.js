@@ -12,8 +12,8 @@ const addUser = (obj) => {
 }
 
 const getUser = (whereClause) => {
-    return new Promise((resolve, reject)=>{
-        User.findOne(whereClause).then(user=>{
+    return new Promise((resolve, reject) => {
+        User.findOne(whereClause).then(user => {
             if (!user)
                 reject("No user found.");
             resolve(user)
@@ -43,8 +43,8 @@ const removeUser = (whereClause) => {
 }
 
 const removeAllUsers = () => {
-    return new Promise((resolve, reject)=>{
-        User.deleteMany({}).then(users=>{
+    return new Promise((resolve, reject) => {
+        User.deleteMany({}).then(users => {
             if (users.deletedCount === 0)
                 reject("No users to remove");
             resolve(users.deletedCount);

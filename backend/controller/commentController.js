@@ -3,7 +3,7 @@ const Comment = require("../model/comment");
 
 const addComment = async (obj) => {
     return new Promise((resolve, reject) => {
-        Comment.create(obj).then(async(response) => {
+        Comment.create(obj).then(async (response) => {
             if (!response)
                 reject("Unable to add comment");
             resolve(response);
@@ -15,7 +15,7 @@ const updateComment = async (whereClause, obj) => {
     return new Promise((resolve, reject) => {
         Comment.findOneAndUpdate(whereClause, obj, {
             new: true
-        }).then(async(response) => {
+        }).then(async (response) => {
             if (!response)
                 reject("No comment to update");
             resolve(response);
@@ -33,11 +33,9 @@ const getComment = async (whereClause) => {
     });
 }
 
-const getComments = async (post_id) => {
+const getComments = async () => {
     return new Promise((resolve, reject) => {
-        Comment.find({
-                post: post_id
-            })
+        Comment.find({})
             .then(response => {
                 resolve(response);
             })
@@ -46,8 +44,8 @@ const getComments = async (post_id) => {
 }
 
 const deleteComment = async (whereClause) => {
-    return new Promise((resolve, reject)=>{
-        Comment.findOneAndDelete(whereClause).then(response=>{
+    return new Promise((resolve, reject) => {
+        Comment.findOneAndDelete(whereClause).then(response => {
             if (!response)
                 reject("The comment which was to be removed didn't exist");
             resolve(response);

@@ -1,18 +1,9 @@
 require("dotenv").config();
 const commentController = require("./commentController");
 const postController = require("./postController");
+const transactioController = require("./transactionController");
 
-const Pusher = require("pusher");
-
-const pusher = new Pusher({
-    appId: process.env.app_id,
-    key: process.env.key,
-    secret: process.env.secret,
-    cluster: process.env.cluster,
-    useTLS: true
-});
-
-const addComment = async (req, res) => {
+const addComment = async (req, res, io) => {
     let comment = req.body;
     commentController.addComment(comment).then(async (response) => {
         if (response.replied_to) {
@@ -24,8 +15,10 @@ const addComment = async (req, res) => {
                 }
             });
         }
-        pusher.trigger("comments", "addComment", {
-            data: response
+        await transactioController.addTransaction("add", response, response._id);
+        io.sockets.emit("addComment", {
+            data: response,
+            timestamp: Date.now()
         });
         res.json({
             message: "Done"
@@ -37,7 +30,7 @@ const addComment = async (req, res) => {
     });
 }
 
-const deleteComment = async (req, res) => {
+const deleteComment = async (req, res, io) => {
     let {
         comment_id,
         user_id
@@ -46,9 +39,6 @@ const deleteComment = async (req, res) => {
         _id: comment_id,
         user: user_id
     }).then(async (response) => {
-        pusher.trigger("comments", "deleteComment", {
-            data: req.body
-        });
         if (response.replied_to) {
             await commentController.updateComment({
                 replies: response._id
@@ -57,14 +47,18 @@ const deleteComment = async (req, res) => {
                     replies: response._id
                 }
             });
-        }
-        else{
+        } else {
             await Promise.all(response.replies.map(id => {
                 return commentController.deleteComment({
                     _id: id
                 });
             }));
         }
+        await transactioController.addTransaction("delete", req.body, response._id);
+        io.sockets.emit("deleteComment", {
+            data: req.body,
+            timestamp: Date.now()
+        });
         res.json({
             code: 200,
             message: "Comment deleted succesfully"
@@ -77,48 +71,30 @@ const deleteComment = async (req, res) => {
     });
 }
 
-const updateComment = async (req, res) => {
+const updateComment = async (req, res, io) => {
     let {
         comment_id,
         user_id,
-        text
+        text,
+        operation
     } = req.body;
     let type = req.params.type;
     let comment = await commentController.getComment({
         _id: comment_id
     });
-    if (type === 'like'){
-        if (comment.likes.includes(user_id)){
-            comment.likes.splice(comment.likes.indexOf(user_id), 1);
-        }
-        else{
-            if (comment.dislikes.includes(user_id)){
-                comment.dislikes.splice(comment.dislikes.indexOf(user_id), 1);
-            }
-            comment.likes.push(user_id);
-        }
-        comment.save((err, comment)=>{
-            if (!err)
-                res.json({
-                    message: "Done"
-                });
-            else
-                res.json({
-                    message: err
-                });
-        });
-    }
-    if (type === 'dislike'){
-        if (comment.dislikes.includes(user_id)){
-            comment.dislikes.splice(comment.dislikes.indexOf(user_id), 1);
-        }
-        else{
-            if (comment.likes.includes(user_id)){
+    if (type === 'like') {
+        if (comment.likes.includes(user_id)) {
+            if (operation === 'remove')
                 comment.likes.splice(comment.likes.indexOf(user_id), 1);
+        } else {
+            if (operation === 'add') {
+                if (comment.dislikes.includes(user_id)) {
+                    comment.dislikes.splice(comment.dislikes.indexOf(user_id), 1);
+                }
+                comment.likes.push(user_id);
             }
-            comment.dislikes.push(user_id);
         }
-        comment.save((err, comment)=>{
+        comment.save((err, comment) => {
             if (!err)
                 res.json({
                     message: "Done"
@@ -129,7 +105,29 @@ const updateComment = async (req, res) => {
                 });
         });
     }
-    else if (type === 'updateText'){
+    if (type === 'dislike') {
+        if (comment.dislikes.includes(user_id)) {
+            if (operation === 'remove')
+                comment.dislikes.splice(comment.dislikes.indexOf(user_id), 1);
+        } else {
+            if (operation === 'add') {
+                if (comment.likes.includes(user_id)) {
+                    comment.likes.splice(comment.likes.indexOf(user_id), 1);
+                }
+                comment.dislikes.push(user_id);
+            }
+        }
+        comment.save((err, comment) => {
+            if (!err)
+                res.json({
+                    message: "Done"
+                });
+            else
+                res.json({
+                    message: err
+                });
+        });
+    } else if (type === 'updateText') {
         commentController.updateComment({
             _id: comment_id,
             user: user_id
@@ -145,9 +143,14 @@ const updateComment = async (req, res) => {
             });
         });
     }
-    pusher.trigger("comments", "updateComment", {
+    await transactioController.addTransaction("update", {
         data: req.body,
         type
+    }, comment_id);
+    io.sockets.emit("updateComment", {
+        data: req.body,
+        type,
+        timestamp: Date.now()
     });
 }
 
