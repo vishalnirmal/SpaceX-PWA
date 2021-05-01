@@ -1,5 +1,5 @@
-const staticCacheName = "static-v12";
-const dynamicCacheName = "dynamic-v12";
+const staticCacheName = "static-v26";
+const dynamicCacheName = "dynamic-v26";
 const assets = [
     "/",
     "/fallback",
@@ -93,23 +93,20 @@ self.addEventListener("fetch", e => {
 
 self.addEventListener('sync', (e) => {
     console.log("Sync event called", e.tag);
-    if (e.tag === 'sync-comments') {
+    if (e.tag === 'sync-comments-offline') {
+        e.waitUntil(syncTransactions());
+        if (Notification.permission === 'granted') {
+            var options = {
+                body: 'The changes you made while offline are successfully uploaded to the server.',
+                icon: "/images/logo-144.png",
+                vibrate: [100, 50, 100]
+            };
+            self.registration.showNotification("Comments Updated!!!", options);
+        }
+    } else if (e.tag === 'sync-comments-online') {
         e.waitUntil(syncTransactions());
     }
-})
-
-// self.addEventListener('notificationclick', function(e) {
-//     var notification = e.notification;
-//     var primaryKey = notification.data.primaryKey;
-//     var action = e.action;
-
-//     if (action === 'close') {
-//       notification.close();
-//     } else {
-//         self.window.location.focus();
-//         notification.close();
-//     }
-//   });
+});
 
 let idb = async function (dbname) {
     return new Promise((resolve, reject) => {
@@ -210,6 +207,8 @@ const syncTransaction = async (res, transaction) => {
         }).then(async () => {
             await res._delete(transaction._id).catch(console.log);
             resolve("Done");
-        }).catch(reject);
+        }).catch(() => {
+            sendUploadNotification = true;
+        });
     });
 }
