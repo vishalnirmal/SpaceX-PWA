@@ -4,4 +4,5 @@ if ("serviceWorker" in navigator) {
     }).catch(() => {
         // console.log("Error occured");
     });
+    Notification.requestPermission();
 }

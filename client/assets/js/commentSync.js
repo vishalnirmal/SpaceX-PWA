@@ -2,6 +2,7 @@ let syncer = async () => {
     let post_id = document.body.getAttribute("post-id");
     let commentDb = await idb('spacexDb', 'commentStore');
     const addComment = async (comment) => {
+        var parent_user;
         if (comment._id) {
             let checkCommentAlreadyExist = await commentDb.get(comment._id);
             if (checkCommentAlreadyExist)
@@ -20,12 +21,14 @@ let syncer = async () => {
         if (obj) {
             if (obj.replied_to) {
                 let comment = await commentDb.get(obj.replied_to);
+                parent_user = comment.user;
                 comment.replies.push(obj._id);
                 await commentDb.put(comment);
             }
             if (comment.post === post_id)
                 renderComment(comment);
         }
+        return parent_user;
     }
     const getComments = async (post) => {
         let comments = await commentDb.getAll(post);

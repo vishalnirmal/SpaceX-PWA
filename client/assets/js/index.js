@@ -27,11 +27,22 @@ syncer().then(async (res) => {
                 await res.updateComment(transaction.data.type, transaction.data.data).catch(console.log);
             }
         }
-    });
-    socket.on('addComment', (data) => {
+    })
+    socket.on('addComment', async (data) => {
         updateTimestamp(data.timestamp);
         let comment = data.data;
-        res.addComment(comment);
+        let parent_user = await res.addComment(comment);
+        if (Notification.permission === "granted" && document.body.getAttribute('user-id') === parent_user && comment.user !== parent_user) {
+            navigator.serviceWorker.getRegistration()
+                .then(reg => {
+                    var options = {
+                        body: 'Your comment got a reply.',
+                        icon: "/images/logo-144.png",
+                        vibrate: [100, 50, 100]
+                    };
+                    reg.showNotification("New Reply!!!", options).catch(console.log);
+                });
+        }
     });
     socket.on('deleteComment', (data) => {
         updateTimestamp(data.timestamp);
