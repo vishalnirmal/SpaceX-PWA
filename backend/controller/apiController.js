@@ -158,18 +158,8 @@ const getComments = async (req, res) => {
     let user_id = req.params.id;
     let post_id = req.params.post_id;
     commentController.getComments(post_id).then(async (response) => {
-        let likes = [];
-        let dislikes = [];
-        if (user_id) {
-            likes = await commentController.getUserLikes(user_id);
-            dislikes = await commentController.getUserDislikes(user_id);
-            likes = likes.map(like => like._id);
-            dislikes = dislikes.map(dislike => dislike._id);
-        }
         res.json({
             comments: response,
-            likes,
-            dislikes
         });
     }).catch(err => {
         res.json(err);

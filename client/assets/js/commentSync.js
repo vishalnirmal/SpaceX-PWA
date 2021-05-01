@@ -1,7 +1,21 @@
 let syncer = async () => {
     let post_id = document.body.getAttribute("post-id");
-    let commentDb = await idb('demoDb', 'commentStore');
+    let commentDb = await idb('spacexDb', 'commentStore');
     const addComment = async (comment) => {
+        if (comment._id) {
+            let checkCommentAlreadyExist = await commentDb.get(comment._id);
+            if (checkCommentAlreadyExist)
+                return;
+        }
+        // Setting default values for some comment properties
+        if (!comment.replies)
+            comment.replies = [];
+        if (!comment.likes)
+            comment.likes = [];
+        if (!comment.dislikes)
+            comment.dislikes = [];
+        if (!comment.date)
+            comment.date = Date.now();
         let obj = await commentDb.add(comment);
         if (obj) {
             if (obj.replied_to) {

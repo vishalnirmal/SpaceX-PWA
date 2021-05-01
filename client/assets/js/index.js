@@ -14,18 +14,19 @@ if (timestamp) {
 syncer().then(async (res) => {
     await res.getComments(document.body.getAttribute("post-id")).catch(console.log);
     socket.on('sync', async (transactions) => {
-        await Promise.all(transactions.map(transaction => {
+        for (let i = 0; i < transactions.length; i++) {
+            let transaction = transactions[i];
             if (transaction.mode === 'add') {
                 updateTimestamp(transaction.timestamp);
-                return res.addComment(transaction.data);
+                await res.addComment(transaction.data).catch(console.log);
             } else if (transaction.mode === 'delete') {
                 updateTimestamp(transaction.timestamp);
-                return res.removeComment(transaction.data);
+                await res.removeComment(transaction.data).catch(console.log);
             } else if (transaction.mode === 'update') {
                 updateTimestamp(transaction.timestamp);
-                return res.updateComment(transaction.data.type, transaction.data.data);
+                await res.updateComment(transaction.data.type, transaction.data.data).catch(console.log);
             }
-        })).catch(console.log);
+        }
     });
     socket.on('addComment', (data) => {
         updateTimestamp(data.timestamp);
@@ -42,65 +43,99 @@ syncer().then(async (res) => {
     });
 }).catch(console.log);
 
-// const getComments = () => {
-//     let user_id = document.body.getAttribute("user-id");
-//     let post_id = document.body.getAttribute("post-id");
-//     let url = "/api/comments/getComments/" + post_id;
-//     if (user_id)
-//         url += "/" + user_id;
-//     fetch(url).then(res => res.json()).then(res => {
-//         let {
-//             comments,
-//             likes,
-//             dislikes
-//         } = res;
-//         localStorage.setItem("likes", JSON.stringify(likes));
-//         localStorage.setItem("dislikes", JSON.stringify(dislikes));
-//         comments.forEach(comment => {
-//             renderComment(comment);
-//         });
-//     }).catch(console.log);
-// }
 const sendComment = async (comment) => {
-    let db = await syncer().catch(console.log);
     let user_id = document.body.getAttribute("user-id");
     let post_id = document.body.getAttribute('post-id');
     if (user_id) {
         comment.user = user_id;
         comment.post = post_id;
-        fetch("/api/comments/addComment", {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(comment)
-        }).catch(console.log);
+        let commentDb = await syncer();
+        let transactionDb = await idb('spacexDb', 'transactionStore');
+        await commentDb.addComment(comment).catch(console.log);
+        let transaction = {
+            url: "/api/comments/addComment",
+            data: comment,
+            timestamp: Date.now()
+        }
+        await transactionDb.add(transaction);
+        uploadComment();
     }
 }
-const updateComment = (comment, type) => {
+const updateComment = async (comment, type) => {
     let user_id = document.body.getAttribute("user-id");
     if (user_id) {
         comment.user_id = user_id;
-        fetch("/api/comments/updateComment/" + type, {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(comment)
-        }).catch(console.log);
+        let url = "/api/comments/updateComment/" + type;
+        let commentDb = await syncer();
+        let transactionDb = await idb('spacexDb', 'transactionStore');
+        await commentDb.updateComment(type, comment).catch(console.log);
+        let transaction = {
+            url,
+            data: comment,
+            timestamp: Date.now()
+        }
+        await transactionDb.add(transaction).catch(console.log);
+        uploadComment();
     }
 }
-const deleteCommentFromDb = (comment) => {
+const deleteCommentFromDb = async (comment) => {
     let user_id = document.body.getAttribute("user-id");
     if (user_id) {
         comment.user_id = user_id;
-        fetch("/api/comments/deleteComment", {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(comment)
-        }).catch(console.log);
+        let commentDb = await syncer();
+        let transactionDb = await idb('spacexDb', 'transactionStore');
+        await commentDb.removeComment(comment).catch(console.log);
+        let transaction = {
+            url: "/api/comments/deleteComment",
+            data: comment,
+            timestamp: Date.now()
+        }
+        await transactionDb.add(transaction).catch(console.log);
+        uploadComment();
     }
 }
-// getComments();
+
+const uploadComment = () => {
+    navigator.serviceWorker.ready.then(registration => {
+        if ('SyncManager' in window) {
+            registration.sync.register('sync-comments').then(_ => {}).catch(err => {
+                console.log("Error in registering background sync");
+            })
+        } else {
+            if (navigator.onLine) {
+                syncFallback();
+            }
+        }
+    });
+}
+
+const syncFallback = async () => {
+    let transactionStore = await idb('spacexDb', 'transactionStore');
+    let repeat = setInterval(async () => {
+        let transactions = await transactionStore.getTxns().catch(console.log);
+        let i = 0;
+        for (i = 0; i < transactions.length; i++) {
+            let transaction = transactions[i];
+            try {
+                await fetch(transaction.url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(transaction.data)
+                });
+                await transactionStore._delete(transaction._id).catch(console.log);
+            } catch (err) {
+                break;
+            }
+        }
+        if (i === transactions.length)
+            clearInterval(repeat);
+    }, 1000);
+}
+
+window.ononline = (e) => {
+    if (!window.SyncManager) {
+        syncFallback();
+    }
+}
