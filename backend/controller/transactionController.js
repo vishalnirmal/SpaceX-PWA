@@ -33,7 +33,25 @@ const getTransactions = async (timestamp) => {
     });
 }
 
+const getTransaction = async (whereClause) => {
+    return new Promise((resolve, reject)=>{
+        Transaction.findOne(whereClause).then(response=>{
+            resolve(response);
+        }).catch(reject);
+    });
+}
+
+const deleteTransaction = async (whereClause) => {
+    return new Promise((resolve, reject)=>{
+        Transaction.deleteMany(whereClause).then(response=>{
+            resolve(response.deletedCount);
+        }).catch(reject);
+    });
+}
+
 module.exports = {
     addTransaction,
-    getTransactions
+    getTransactions,
+    deleteTransaction,
+    getTransaction
 };

@@ -1,5 +1,5 @@
-const staticCacheName = "static-v26";
-const dynamicCacheName = "dynamic-v26";
+const staticCacheName = "static-v36";
+const dynamicCacheName = "dynamic-v36";
 const assets = [
     "/",
     "/fallback",
@@ -92,7 +92,6 @@ self.addEventListener("fetch", e => {
 });
 
 self.addEventListener('sync', (e) => {
-    console.log("Sync event called", e.tag);
     if (e.tag === 'sync-comments-offline') {
         e.waitUntil(syncTransactions());
         if (Notification.permission === 'granted') {

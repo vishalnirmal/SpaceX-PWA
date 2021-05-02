@@ -8,25 +8,28 @@ let syncer = async () => {
             if (checkCommentAlreadyExist)
                 return;
         }
-        // Setting default values for some comment properties
-        if (!comment.replies)
-            comment.replies = [];
+        comment.replies = [];
         if (!comment.likes)
             comment.likes = [];
         if (!comment.dislikes)
             comment.dislikes = [];
         if (!comment.date)
             comment.date = Date.now();
-        let obj = await commentDb.add(comment);
-        if (obj) {
-            if (obj.replied_to) {
-                let comment = await commentDb.get(obj.replied_to);
-                parent_user = comment.user;
-                comment.replies.push(obj._id);
-                await commentDb.put(comment);
-            }
-            if (comment.post === post_id)
-                renderComment(comment);
+        let obj;
+        if (!comment.replied_to) {
+            obj = await commentDb.add(comment);
+            if (obj.post === post_id)
+                renderComment(obj);
+            return;
+        }
+        let parent_comment = await commentDb.get(comment.replied_to);
+        if (parent_comment) {
+            obj = await commentDb.add(comment);
+            parent_user = parent_comment.user;
+            parent_comment.replies.push(obj._id);
+            await commentDb.put(parent_comment);
+            if (obj.post === post_id)
+                renderComment(obj);
         }
         return parent_user;
     }
@@ -108,16 +111,18 @@ let syncer = async () => {
             return comment;
         }
         let comment = await commentDb.get(obj.comment_id);
-        var updatedComment;
-        if (type === 'like')
-            updatedComment = updateLike(comment, obj);
-        else if (type === 'dislike')
-            updatedComment = updateDislike(comment, obj);
-        else if (type === 'updateText')
-            updatedComment = updateText(comment, obj);
-        await commentDb.put(updatedComment).catch(console.log);
-        if (updatedComment.post === post_id)
-            changeComment(updatedComment);
+        if (comment) {
+            var updatedComment;
+            if (type === 'like')
+                updatedComment = updateLike(comment, obj);
+            else if (type === 'dislike')
+                updatedComment = updateDislike(comment, obj);
+            else if (type === 'updateText')
+                updatedComment = updateText(comment, obj);
+            await commentDb.put(updatedComment).catch(console.log);
+            if (updatedComment.post === post_id)
+                changeComment(updatedComment);
+        }
     }
     return {
         addComment,

@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const router = require("./backend/routes/routes");
 const PORT = process.env.PORT || 5500;
 
-mongoose.connect(process.env.DB_URI, {
+mongoose.connect(process.env.DB_URI_TEST, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false

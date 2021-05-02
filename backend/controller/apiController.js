@@ -54,6 +54,11 @@ const deleteComment = async (req, res, io) => {
                 });
             }));
         }
+        await transactioController.deleteTransaction({
+            data_id: {
+                $in: [response, ...response.replies]
+            }
+        });
         await transactioController.addTransaction("delete", req.body, response._id);
         io.sockets.emit("deleteComment", {
             data: req.body,
@@ -78,6 +83,16 @@ const updateComment = async (req, res, io) => {
         text,
         operation
     } = req.body;
+    let isDeleted = await transactioController.getTransaction({
+        data_id: comment_id,
+        mode: "delete"
+    });
+    if (isDeleted){
+        res.json({
+            message: "Done"
+        });
+        return;
+    }
     let type = req.params.type;
     let comment = await commentController.getComment({
         _id: comment_id
