@@ -24,6 +24,14 @@ app.engine("html", require("ejs").renderFile);
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/client/assets"));
 
+if (process.env.NODE_ENV === 'production') {
+    app.use((req, res, next) => {
+        if (req.header('x-forwarded-proto') !== 'https')
+            res.redirect(`https://${req.header('host')}${req.url}`)
+        else
+            next()
+    })
+}
 
 const server = require('http').createServer(app);
 const io = require('./backend/controller/socketController').createServer(server);
@@ -31,4 +39,4 @@ app.use("/", router(io));
 
 server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
-}); 
+});
